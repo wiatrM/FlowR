@@ -1,0 +1,37 @@
+{
+  "name": "FlowR",
+  "description": "Task Flow, ToDo List, GTD and Time tracker at once.",
+  "version": "0.0.1",
+  "contributors": [
+    {
+      "name": "wiatrM",
+      "email": ""
+    },
+    {
+      "name": "lapek",
+      "email": ""
+    }
+  ],
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/wiatrM/FlowR.git"
+    }
+  ],
+  "licenses": [
+    {
+      "name": "Apache-2.0",
+      "url": "http://opensource.org/licenses/apache2.0.php"
+    },
+    {
+      "name": "MIT",
+      "url": "http://www.opensource.org/licenses/mit-license.php"
+    }
+  ],
+  "devDependencies": {
+    "bower": "^1.7.9",
+    "frisby": "^0.8.5",
+    "gulp": "^3.9.1",
+    "mocha": "^2.5.3"
+  }
+}

@@ -47,8 +47,9 @@ bower_components
 .bower-cache
 
 # Downloaded bower libs
-website/client/bower_components
+website/client/vendor
 
 # Vagrant specific
 .vagrant
 /Vagrantfile
+

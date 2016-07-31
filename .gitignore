@@ -51,3 +51,4 @@ website/client/bower_components
 
 # Vagrant specific
 .vagrant
+/Vagrantfile

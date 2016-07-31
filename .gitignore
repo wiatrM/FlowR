@@ -38,4 +38,16 @@ bower_components
 .node_repl_history
 
 # IntelliJ directory
-.idea
+.idea*
+/FlowR.iml
+
+# Bower specific
+.bower-tmp
+.bower-registry
+.bower-cache
+
+# Downloaded bower libs
+website/client/bower_components
+
+# Vagrant specific
+.vagrant

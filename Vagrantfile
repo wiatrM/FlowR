@@ -32,8 +32,8 @@ Vagrant.configure("2") do |config|
   config.vm.hostname = "flr"
 
   # provision file
-  config.vm.provision "shell", path: "provision.sh"
-  config.vm.provision :shell, path: "startup.sh", run: "always", privileged: true
+  config.vm.provision "shell", path: "vagrant/provision.sh"
+  config.vm.provision :shell, path: "vagrant/startup.sh", run: "always", privileged: true
 
   # enable GUI access for grunt fast develop
   # NOTE: comment this lines to connect via SSH

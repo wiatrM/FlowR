@@ -53,3 +53,4 @@ website/client/vendor
 .vagrant
 /Vagrantfile
 
+/website/client/index.html

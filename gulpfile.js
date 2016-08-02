@@ -13,7 +13,7 @@ var mainBowerFiles = require('main-bower-files');
 
 
 var config = {
-    clientDestination: './website/client',
+    clientDestination: './client/dist',
     sassPattern: 'sass/**/*.scss',
     production: !!util.env.production
 };

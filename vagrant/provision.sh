@@ -17,40 +17,24 @@ echo Installing phantomjs dependency...
 apt-get install -qq libicu48
 apt-get install -qq apache2-utils
 
-echo Installing git
+echo Installing git...
 apt-get install -qq git
 
-#@TODO: uncomment or remove to PostgresSQL after choosing right DB
-        # Import MongoDB public GPG key
-        # http://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/
-        #apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
+echo Installing PostgreSQL...
+apt-get install -qq postgresql postgresql-contrib
 
-        # Create a list file for MongoDB
-        #echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list
-
-        #echo Installing Mongodb...
-        #apt-get update
-        #apt-get install mongodb-10gen
-        #sudo apt-get install -y mongodb-org
-
-echo Installing npm...
-apt-get install -qq python-software-properties
-echo Adding repository node.js...
-apt-add-repository -y ppa:chris-lea/node.js
-echo Updating repositories...
-apt-get update -qq
-echo Installing node.js
-apt-get install -qq nodejs
-# Note the new setup script name for Node.js v0.12
-curl -sL https://deb.nodesource.com/setup_0.12 | sudo bash -
-# Then install with:
+echo Installing node 6.x...
+curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 sudo apt-get install -y nodejs
 
 cd /vagrant
 
 echo Installing Gulp/bower...
 npm install gulp -g
-npm install -g  bower phantomjs
+npm install -g bower
+echo Installing strongloop...
+npm install -g strongloop
+npm install -g nsp
 
 echo Installing packages for FlowR...
 npm install --no-bin-link
@@ -58,8 +42,7 @@ npm install --no-bin-link
 echo Installing Bower packages
 sudo -H -u vagrant bower --config.interactive=false install -f
 
-sudo mkdir -p /data/db
+# Install NGINX on top
 
-#install NGINX on top
-
+echo Installing nginx...
 sudo apt-get install -y nginx

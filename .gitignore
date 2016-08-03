@@ -42,7 +42,7 @@ jspm_packages
 .bower-cache
 
 # Downloaded bower libs
-/client/vendor
+/client/bower_components/
 
 # Vagrant specific
 .vagrant

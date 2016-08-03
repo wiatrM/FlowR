@@ -33,6 +33,9 @@ jspm_packages
 .idea*
 /FlowR*
 
+# Cloud9 editor
+.c9
+
 # Bower specific
 .bower-tmp
 .bower-registry
@@ -46,8 +49,9 @@ jspm_packages
 /Vagrantfile
 
 # Client specific
-/client/dist/index.html
+/client/dist/*
+!/client/dist/READAME.md
 /client/.tmp/*
-!/client/.tmp/REDAME.md
+!/client/.tmp/READAME.md
 
 

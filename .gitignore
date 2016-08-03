@@ -22,6 +22,7 @@ build/Release
 # Dependency directories
 node_modules
 jspm_packages
+client/bower_components
 
 # Optional npm cache directory
 .npm
@@ -29,7 +30,7 @@ jspm_packages
 # Optional REPL history
 .node_repl_history
 
-# IntelliJ directory
+# IntelliJ editor
 .idea*
 /FlowR*
 
@@ -50,8 +51,8 @@ jspm_packages
 
 # Client specific
 /client/dist/*
+!/client/dist/css/README.md
 !/client/dist/READAME.md
 /client/.tmp/*
 !/client/.tmp/READAME.md
-
-
+!*/**/README.md

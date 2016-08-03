@@ -1,3 +1,5 @@
+'use strict';
+
 var gulp = require('gulp');
 
 var util = require('gulp-util');
@@ -108,3 +110,16 @@ gulp.task('inject', ['bower'], function() {
 gulp.task('build', ['inject'], function() {
 
 });
+
+/**
+ * Task: Compile all SASS files to CSS files.
+ */
+gulp.task('sass', function () {
+  return gulp.src('./client/src/sass/**/*.scss')
+    .pipe(sass().on('error', sass.logError))
+    .pipe(gulp.dest('./client/dist/css'));
+});
+
+// gulp.task('sass:watch', function () {
+//   gulp.watch('./client/src/sass/**/*.scss', ['sass']);
+// });

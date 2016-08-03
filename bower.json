@@ -3,10 +3,10 @@
   "description": "Task Flow, ToDo List, GTD and Time tracker at once.",
   "main": "",
   "authors": [
-    "wiatrM",
-    "@"
+    "wiatrM <mwiatr.dev@gmail.com>",
+    "lapek <v@>"
   ],
-  "license": "MIT",
+  "license": "Apache-2.0",
   "keywords": [
     "flowr"
   ],
@@ -21,6 +21,7 @@
   "dependencies": {
     "angular": "1.5.8",
     "jquery": "^3.1.0",
-    "bootstrap": "^3.3.7"
+    "bootstrap": "^3.3.7",
+    "font-awesome": "^4.6.3"
   }
 }

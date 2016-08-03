@@ -1,3 +1,5 @@
+'use strict';
+
 var gulp = require('gulp');
 
 var util = require('gulp-util');
@@ -34,18 +36,18 @@ gulp.task('bower', function() {
       .pipe(bower())
       // filter only js files
       .pipe(jsFilter)
-      
+
       //concat to vendor.js
       .pipe(concat('vendor.js'))
-      
+
       // on production uglify and rename to vendor.min.js
       .pipe(config.production ? uglify() : util.noop())
       .pipe(config.production ? rename({ suffix: ".min" }) : util.noop())
-      
+
       // save them to .tmp folder now
       .pipe(gulp.dest(config.tmpDestination))
       .pipe(jsFilter.restore)
-      
+
       // now take css files
       .pipe(cssFilter)
       .pipe(concat('vendor.css'))
@@ -53,12 +55,12 @@ gulp.task('bower', function() {
       .pipe(config.production ? rename({ suffix: ".min" }) : util.noop())
       .pipe(gulp.dest(config.tmpDestination))
       .pipe(cssFilter.restore)
-      
+
       // now take less files
       .pipe(lessFilter)
       .pipe(concat('vendor.less'))
       .pipe(gulp.dest(config.tmpDestination))
-      
+
       // fonts
       .pipe(cssFilter.restore)
       .pipe(rename(function(path) {
@@ -69,3 +71,16 @@ gulp.task('bower', function() {
       .pipe(flatten())
       //.pipe(gulp.dest(config.tmpDestination))
 });
+
+/**
+ * Task: Compile all SASS files to CSS files.
+ */
+gulp.task('sass', function () {
+  return gulp.src('./client/src/sass/**/*.scss')
+    .pipe(sass().on('error', sass.logError))
+    .pipe(gulp.dest('./client/dist/css'));
+});
+
+// gulp.task('sass:watch', function () {
+//   gulp.watch('./client/src/sass/**/*.scss', ['sass']);
+// });

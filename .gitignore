@@ -42,9 +42,6 @@ client/bower_components
 .bower-registry
 .bower-cache
 
-# Downloaded bower libs
-/client/bower_components/
-
 # Vagrant specific
 .vagrant
 /Vagrantfile
@@ -52,7 +49,7 @@ client/bower_components
 # Client specific
 /client/dist/*
 !/client/dist/css/README.md
-!/client/dist/READAME.md
+!/client/dist/README.md
 /client/.tmp/*
-!/client/.tmp/READAME.md
+!/client/.tmp/README.md
 !*/**/README.md

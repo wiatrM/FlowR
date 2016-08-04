@@ -1,38 +1,40 @@
 {
-  "name": "FlowR",
-  "description": "Task Flow, ToDo List, GTD and Time tracker at once.",
-  "main": "",
-  "authors": [
-    "wiatrM",
-    "@"
-  ],
-  "overrides": {
-    "bootstrap": {
-      "main": [
-        "dist/js/bootstrap.js",
-        "dist/css/bootstrap.css",
-        "less/bootstrap.less"
-      ]
+    "name": "flowr",
+    "description": "Task Flow, ToDo List, GTD and Time tracker at once.",
+    "main": "",
+    "authors": [
+        "wiatrM <mwiatr.dev@gmail.com>",
+        "lapek <v@>"
+    ],
+    "license": "Apache-2.0",
+    "overrides": {
+        "bootstrap": {
+            "main": [
+                "dist/js/bootstrap.js",
+                "dist/css/bootstrap.css",
+                "less/bootstrap.less"
+            ]
+        }
+    },
+    "keywords": [
+        "flowr"
+    ],
+    "homepage": "https://github.com/wiatrM/FlowR",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ],
+    "dependencies": {
+        "jquery": "^3.1.0",
+        "angular": "1.5.8",
+        "bootstrap": "^3.3.7",
+        "font-awesome": "^4.6.3",
+        "animate.css": "^3.5.2"
+    },
+    "scripts": {
+        "postinstall": "gulp rebuild:bower"
     }
-  },
-  "license": "MIT",
-  "keywords": [
-    "flowr"
-  ],
-  "homepage": "https://github.com/wiatrM/FlowR",
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ],
-  "dependencies": {
-    "angular": "1.5.8",
-    "jquery": "^3.1.0",
-    "bootstrap": "^3.3.7"
-  },
-  "scripts": {
-    "postinstall": "gulp rebuild:bower"
-  }
 }

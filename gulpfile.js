@@ -33,9 +33,9 @@ var config = {
  */
 gulp.task('clean', function() {
   return del([
-    config.tmpDestination + '/**/*', 
+    config.tmpDestination + '/**/*',
     '!' + config.tmpDestination + '/README.md',
-    config.buildDestination + '/**/*', 
+    config.buildDestination + '/**/*',
     '!' + config.buildDestination + '/README.md',
   ]);
 });
@@ -98,18 +98,25 @@ gulp.task('bower', function() {
  * SAVE THEM TO client/dist
  */
 gulp.task('app', function() {
-    return gulp.src(config.srcDestination + '/app/**/*.js')
-      // !we MUST be sure that we include angular files in right order!
-      .pipe(angularFilesort())
-      // on production CONCAT, uglify, rev, gzip and rename to app.min.js
-      // we don't want to contact files in development for better debug controll
-      .pipe(config.production ? concat('app.js') : util.noop())
-      .pipe(config.production ? uglify() : util.noop())
-      //.pipe(config.production ? gzip() : util.noop()) // for now disabled
-      .pipe(config.production ? rev() : util.noop())
-      .pipe(config.production ? rename({ suffix: ".min" }) : util.noop())
+  var jsFilter = gulpFilter('**/*.js', {restore: true});
+  var htmlFilter = gulpFilter('**/*.html', {restore: true});
+  return gulp.src(config.srcDestination + '/app/**/*')
+    .pipe(htmlFilter)
+    .pipe(gulp.dest(config.buildDestination + '/app', {global : '.'}))
+    .pipe(htmlFilter.restore)
+    .pipe(jsFilter)
+    // !we MUST be sure that we include angular files in right order!
+    .pipe(angularFilesort())
+    // on production CONCAT, uglify, rev, gzip and rename to app.min.js
+    // we don't want to contact files in development for better debug controll
+    .pipe(config.production ? concat('app.js') : util.noop())
+    .pipe(config.production ? uglify() : util.noop())
+    //.pipe(config.production ? gzip() : util.noop()) // for now disabled
+    .pipe(config.production ? rev() : util.noop())
+    .pipe(config.production ? rename({ suffix: ".min" }) : util.noop())
 
-      .pipe(gulp.dest(config.buildDestination + '/app'))
+    .pipe(gulp.dest(config.buildDestination + '/app', {global : '.'}))
+    .pipe(jsFilter.restore)
 });
 
 /**
@@ -124,7 +131,7 @@ gulp.task('inject', function() {
 
     // inject app files
     .pipe(inject(
-      gulp.src(config.buildDestination + '/app/**/*')
+      gulp.src(config.buildDestination + '/app/**/*.js')
         // !we MUST be sure that we include angular files in right order!
         .pipe(angularFilesort())
       , {name: 'app', ignorePath: 'client/dist'})
@@ -140,7 +147,7 @@ gulp.task('sass', function () {
   return gulp.src(config.srcDestination + '/sass/**/*.scss')
     .pipe(sass().on('error', sass.logError))
     .pipe(concat('app.css'))
-    
+
     // min/gzip/rev on production
     .pipe(config.production ? minifycss() : util.noop())
     //.pipe(config.production ? gzip() : util.noop()) // for now disabled
@@ -153,7 +160,7 @@ gulp.task('sass', function () {
  * Task: Main build task. NOTE: must be run at least ONCE after installation
  */
 gulp.task('build', function(cb) {
-  // run tasks synchronously 
+  // run tasks synchronously
   runSequence(
     'clean',
     // those can be done async in paraell for speed-up
@@ -169,7 +176,7 @@ gulp.task('build', function(cb) {
  * Only working in development mode (production files will have changed names in template)
  */
 gulp.task('rebuild:bower', function(cb) {
-  // run tasks synchronously 
+  // run tasks synchronously
   runSequence(
     'bower',
     cb
@@ -181,7 +188,7 @@ gulp.task('rebuild:bower', function(cb) {
  * Only working in development mode (production files will have changed names in template)
  */
 gulp.task('rebuild:app', function(cb) {
-  // run tasks synchronously 
+  // run tasks synchronously
   runSequence(
     ['app','sass'],
     cb

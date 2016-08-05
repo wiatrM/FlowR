@@ -1,4 +1,4 @@
-# FlowR [![Build Status](https://travis-ci.org/wiatrM/FlowR.svg?branch=development)](https://travis-ci.org/wiatrM/FlowR) [![Test Coverage](https://codeclimate.com/github/wiatrM/FlowR/badges/coverage.svg)](https://codeclimate.com/github/wiatrM/FlowR/coverage)
+# FlowR [![Build Status](https://travis-ci.org/wiatrM/FlowR.svg?branch=development)](https://travis-ci.org/wiatrM/FlowR) [![Coverage Status](https://coveralls.io/repos/github/wiatrM/FlowR/badge.svg?branch=development)](https://coveralls.io/github/wiatrM/FlowR?branch=development)
 Task Flow, ToDo List, GTD and Time tracker at once.
 
 # Additional information

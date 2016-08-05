@@ -53,3 +53,6 @@ client/bower_components
 /client/.tmp/*
 !/client/.tmp/README.md
 !*/**/README.md
+
+# Coverage information
+coverage

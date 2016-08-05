@@ -21,6 +21,10 @@ var runSequence = require('run-sequence');
 var gulpsync = require('gulp-sync')(gulp);
 var del = require('del');
 
+// tests
+var mocha = require('gulp-mocha');
+var istanbul = require('gulp-istanbul');
+
 var config = {
     buildDestination: './client/dist',
     srcDestination: './client/src',
@@ -230,13 +234,40 @@ gulp.task('rebuild:app', function(cb) {
     )
 });
 
+
+/**
+ * Task: Test api_integration component
+ */
+gulp.task('test:api', function(cb) {
+
+    // get server code to test coverage...
+    return gulp.src('./server/**/*.js')
+
+    .pipe(istanbul({
+            includeUntested: true
+        }))
+        .on('finish', function() {
+            // Get Mocha tests
+            gulp.src('./test/api_integration/**/*.js')
+                .pipe(mocha())
+                .pipe(istanbul.writeReports({
+                    dir: './coverage/api-test-coverage',
+                    reporters: ['lcov'],
+                    reportOpts: {
+                        dir: './coverage/api-test-coverage'
+                    }
+                }));
+        });
+});
+
+
 /**
  * Task: Test all components. Thiss will be run by Travis CI after commit.
  */
 gulp.task('test:all', function(cb) {
-    //runSequence(
-    // mocha etc @TODO.
-    //  cb
-    //)
+    runSequence(
+        'test:api',
+        cb
+    )
     return util.noop();
 });

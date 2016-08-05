@@ -28,14 +28,14 @@
 
                 // error handling
 
-                $provide.factory('ErrorInterceptor', function($q) {
+                $provide.factory('ErrorInterceptor', ['$q', function($q) {
                     return {
                         responseError: function(rejection) {
                             console.error(rejection.data.code + ': ' + rejection.data.message);
                             return $q.reject(rejection);
                         }
                     };
-                });
+                }]);
 
                 $httpProvider.interceptors.push('ErrorInterceptor');
             }

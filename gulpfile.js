@@ -35,7 +35,7 @@ var config = {
 /**
  * Task: Clean both .tmp and dist folders
  */
-gulp.task('clean', function() {
+gulp.task('clean', function () {
     return del([
         config.tmpDestination + '/**/*',
         '!' + config.tmpDestination + '/README.md',
@@ -48,7 +48,7 @@ gulp.task('clean', function() {
  * Task: Grab all main vendor files from bower dep list, concat, rename, minify/uglify on production only,
  * SAVE THEM TO client/dist
  */
-gulp.task('bower', function() {
+gulp.task('bower', function () {
     var jsFilter = gulpFilter('**/*.js', {
         restore: true
     });
@@ -64,43 +64,43 @@ gulp.task('bower', function() {
         // filter only js files
         .pipe(jsFilter)
 
-    //concat to vendor.js
-    .pipe(concat('vendor.js'))
+        //concat to vendor.js
+        .pipe(concat('vendor.js'))
 
-    // on production uglify, rev, gzip and rename to vendor.min.js
-    .pipe(config.production ? uglify() : util.noop())
+        // on production uglify, rev, gzip and rename to vendor.min.js
+        .pipe(config.production ? uglify() : util.noop())
         //.pipe(config.production ? gzip() : util.noop()) // for now disabled
         .pipe(config.production ? rev() : util.noop())
         .pipe(config.production ? rename({
             suffix: ".min"
         }) : util.noop())
 
-    // save them to build folder now
-    .pipe(gulp.dest(config.buildDestination + '/js'))
+        // save them to build folder now
+        .pipe(gulp.dest(config.buildDestination + '/js'))
         .pipe(jsFilter.restore)
 
-    // now take css files
-    .pipe(cssFilter)
+        // now take css files
+        .pipe(cssFilter)
         .pipe(concat('vendor.css'))
 
-    .pipe(config.production ? minifycss() : util.noop())
+        .pipe(config.production ? minifycss() : util.noop())
         //.pipe(config.production ? gzip() : util.noop()) // for now disabled
         .pipe(config.production ? rev() : util.noop())
         .pipe(config.production ? rename({
             suffix: ".min"
         }) : util.noop())
 
-    .pipe(gulp.dest(config.buildDestination + '/css'))
+        .pipe(gulp.dest(config.buildDestination + '/css'))
         .pipe(cssFilter.restore)
 
-    // now take less files
-    .pipe(lessFilter)
+        // now take less files
+        .pipe(lessFilter)
         .pipe(concat('vendor.less'))
         .pipe(gulp.dest(config.buildDestination + '/less'))
 
-    // fonts
-    .pipe(cssFilter.restore)
-        .pipe(rename(function(path) {
+        // fonts
+        .pipe(cssFilter.restore)
+        .pipe(rename(function (path) {
             if (~path.dirname.indexOf('fonts')) {
                 path.dirname = '/fonts'
             }
@@ -111,7 +111,7 @@ gulp.task('bower', function() {
  * Task: Grab all app angular files from project, concat, rename, minify/uglify on production only,
  * SAVE THEM TO client/dist
  */
-gulp.task('app', function() {
+gulp.task('app', function () {
     var jsFilter = gulpFilter('**/*.js', {
         restore: true
     });
@@ -137,7 +137,7 @@ gulp.task('app', function() {
             suffix: ".min"
         }) : util.noop())
 
-    .pipe(gulp.dest(config.buildDestination + '/app', {
+        .pipe(gulp.dest(config.buildDestination + '/app', {
             global: '.'
         }))
         .pipe(jsFilter.restore)
@@ -146,29 +146,29 @@ gulp.task('app', function() {
 /**
  * Task: Inject all files from dist to src/index.template.html and save it to dist/index.html
  */
-gulp.task('inject', function() {
+gulp.task('inject', function () {
 
     return gulp.src(config.srcDestination + '/index.template.html')
 
     // inject bower files
-    .pipe(inject(gulp.src([config.buildDestination + '/js/**/*', config.buildDestination + '/css/**/*'], {
-        read: false
-    }), {
-        name: 'bower',
-        ignorePath: 'client/dist'
-    }))
-
-    // inject app js files
-    .pipe(inject(
-        gulp.src(config.buildDestination + '/app/**/*.js')
-        // !we MUST be sure that we include angular files in right order!
-        .pipe(angularFilesort()), {
-            name: 'app',
+        .pipe(inject(gulp.src([config.buildDestination + '/js/**/*', config.buildDestination + '/css/**/*'], {
+            read: false
+        }), {
+            name: 'bower',
             ignorePath: 'client/dist'
         }))
 
-    // inject app style files
-    .pipe(inject(
+        // inject app js files
+        .pipe(inject(
+            gulp.src(config.buildDestination + '/app/**/*.js')
+            // !we MUST be sure that we include angular files in right order!
+                .pipe(angularFilesort()), {
+                name: 'app',
+                ignorePath: 'client/dist'
+            }))
+
+        // inject app style files
+        .pipe(inject(
             gulp.src(config.buildDestination + '/style/**/*'), {
                 name: 'app',
                 ignorePath: 'client/dist'
@@ -180,13 +180,13 @@ gulp.task('inject', function() {
 /**
  * Task: Compile all SASS files to CSS files.
  */
-gulp.task('sass', function() {
+gulp.task('sass', function () {
     return gulp.src(config.srcDestination + '/sass/**/*.scss')
         .pipe(sass().on('error', sass.logError))
         .pipe(concat('app.css'))
 
-    // min/gzip/rev on production
-    .pipe(config.production ? minifycss() : util.noop())
+        // min/gzip/rev on production
+        .pipe(config.production ? minifycss() : util.noop())
         //.pipe(config.production ? gzip() : util.noop()) // for now disabled
         .pipe(config.production ? rev() : util.noop())
         .pipe(config.production ? rename({
@@ -198,7 +198,7 @@ gulp.task('sass', function() {
 /**
  * Task: Main build task. NOTE: must be run at least ONCE after installation
  */
-gulp.task('build', function(cb) {
+gulp.task('build', function (cb) {
     // run tasks synchronously
     runSequence(
         'clean',
@@ -214,7 +214,7 @@ gulp.task('build', function(cb) {
  * Task: Rebuild bower. NOTE: gulp build MUST be run at least ONCE before calling that
  * Only working in development mode (production files will have changed names in template)
  */
-gulp.task('rebuild:bower', function(cb) {
+gulp.task('rebuild:bower', function (cb) {
     // run tasks synchronously
     runSequence(
         'bower',
@@ -226,7 +226,7 @@ gulp.task('rebuild:bower', function(cb) {
  * Task: Rebuild app. NOTE: gulp build MUST be run at least ONCE before calling that
  * Only working in development mode (production files will have changed names in template)
  */
-gulp.task('rebuild:app', function(cb) {
+gulp.task('rebuild:app', function (cb) {
     // run tasks synchronously
     runSequence(
         ['app', 'sass'],
@@ -234,22 +234,21 @@ gulp.task('rebuild:app', function(cb) {
     )
 });
 
-
 /**
  * Task: Test api_integration component
  */
-gulp.task('test:api', function(cb) {
+gulp.task('test:api', function () {
 
     // get server code to test coverage...
     return gulp.src('./server/**/*.js')
 
-    .pipe(istanbul({
+        .pipe(istanbul({
             includeUntested: true
         }))
-        .on('finish', function() {
+        .on('finish', function () {
             // Get Mocha tests
             gulp.src('./test/api_integration/**/*.js')
-                .pipe(mocha())
+                .pipe(mocha({reporter: 'nyan'})) // lulz nyan
                 .pipe(istanbul.writeReports({
                     dir: './coverage/api-test-coverage',
                     reporters: ['lcov'],
@@ -260,14 +259,38 @@ gulp.task('test:api', function(cb) {
         });
 });
 
+/**
+ * Task: Test server UT component
+ */
+gulp.task('test:server', function () {
+
+    // get server code to test coverage...
+    return gulp.src('./server/**/*.js')
+
+        .pipe(istanbul({
+            includeUntested: true
+        }))
+        .on('finish', function () {
+            // Get Mocha tests
+            gulp.src('./test/server/**/*.js')
+                .pipe(mocha({reporter: 'nyan'})) // lulz nyan
+                .pipe(istanbul.writeReports({
+                    dir: './coverage/server-test-coverage',
+                    reporters: ['lcov'],
+                    reportOpts: {
+                        dir: './coverage/server-test-coverage'
+                    }
+                }));
+        });
+});
 
 /**
- * Task: Test all components. Thiss will be run by Travis CI after commit.
+ * Task: Test all components. This will be run by Travis CI after commit.
  */
-gulp.task('test:all', function(cb) {
-    runSequence(
+gulp.task('test:all', function (cb) {
+    return runSequence(
+        'test:server',
         'test:api',
         cb
     )
-    return util.noop();
 });

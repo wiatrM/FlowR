@@ -8,7 +8,7 @@ boot(app, __dirname, function (err) {
     if (err) throw err;
 
     var isMain = require.main === module;
-    app.start = function () {
+    app.start = function (done) {
         var port = app.get('port');
         var host = app.get('host');
         var httpServer = http.createServer(app).listen(port, host, function () {
@@ -30,11 +30,14 @@ boot(app, __dirname, function (err) {
                     cb();
                 });
             };
+            done();
         });
     };
 
     if (isMain)
-        app.start();
+        app.start(function () {
+            console.log('Server started!')
+        });
 
     app.loaded = true;
     app.emit('loaded');

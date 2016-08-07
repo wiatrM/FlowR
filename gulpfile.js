@@ -248,7 +248,7 @@ gulp.task('test:api', function () {
         .on('finish', function () {
             // Get Mocha tests
             gulp.src('./test/api_integration/**/*.js')
-                .pipe(mocha({reporter: 'nyan'})) // lulz nyan
+                .pipe(mocha({reporter: 'spec'}))
                 .pipe(istanbul.writeReports({
                     dir: './coverage/api-test-coverage',
                     reporters: ['lcov'],
@@ -257,6 +257,14 @@ gulp.task('test:api', function () {
                     }
                 }));
         });
+});
+
+/**
+ * Task: Test api_integration component without coverage report
+ */
+gulp.task('test:api:nocov', function () {
+    return gulp.src('./test/api_integration/**/*.js')
+        .pipe(mocha({reporter: 'spec'}))
 });
 
 /**
@@ -273,7 +281,7 @@ gulp.task('test:server', function () {
         .on('finish', function () {
             // Get Mocha tests
             gulp.src('./test/server/**/*.js')
-                .pipe(mocha({reporter: 'nyan'})) // lulz nyan
+                .pipe(mocha({reporter: 'spec'}))
                 .pipe(istanbul.writeReports({
                     dir: './coverage/server-test-coverage',
                     reporters: ['lcov'],
@@ -285,6 +293,15 @@ gulp.task('test:server', function () {
 });
 
 /**
+ * Task: Test server UT component without coverage report
+ */
+gulp.task('test:server:nocov', function () {
+    // get server code to test coverage...
+    return gulp.src('./test/server/**/*.js')
+        .pipe(mocha({reporter: 'spec'}))
+});
+
+/**
  * Task: Test all components. This will be run by Travis CI after commit.
  */
 gulp.task('test:all', function (cb) {
@@ -293,4 +310,30 @@ gulp.task('test:all', function (cb) {
         'test:api',
         cb
     )
+});
+
+/**
+ * Task: Test all components in fast mode (without code coverage report)
+ */
+gulp.task('test:all:nocov', function (cb) {
+    return runSequence(
+        'test:server:nocov',
+        'test:api:nocov',
+        cb
+    )
+});
+
+/**
+ * Task: Watch for code changes in test than reload the test in fast mode
+ */
+gulp.task('test:watch', function () {
+    gulp.watch('./test/api_integration/**/*.js', ['test:api:nocov']);
+    gulp.watch('./test/server/**/*.js', ['test:server:nocov']);
+});
+
+/**
+ * Task: Watch for code changes in client source than reload the dist folder
+ */
+gulp.task('dev', function () {
+    gulp.watch(config.srcDestination + '/**/*', ['rebuild:app']);
 });

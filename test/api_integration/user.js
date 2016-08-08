@@ -2,31 +2,34 @@
 
 var expect = require('chai').expect,
     app = require('../../server/server'),
-    request = require('supertest')(app);
-
-// utils not yet ready.. @TODO
-//var utils = require('../utils').api;
-//var api = new utils(apps, req);
-
-function json(verb, url) {
-    return request[verb](url)
-        .set('Content-Type', 'application/json')
-        .set('Accept', 'application/json')
-        .expect('Content-Type', /json/);
-}
+    request = require('supertest')(app),
+    utils = require('../utils').api(request);
 
 describe('User', function () {
-    describe('GET', function () {
 
-        it('should return a list of all customers', function (done) {
-            json('get', '/api/users')
-                .expect(401, function (err, res) {
-                    // we are not logged in so we except error
-                    expect(res.body.error).to.exist;
-                    done()
+    describe('Main', function () {
+
+        it('should require authorisation', function (done) {
+            utils.json('get', '/api/users')
+                .expect(401)
+                .end(function (err, res) {
+                    expect(res.body.error).to.be.defined;
+                    done();
                 });
         });
 
     });
+
+    describe('Authorization', function () {
+
+        it('should reject login with bad credentials', function (done) {
+            utils.login(true, function(token) {
+                expect(token.error).to.be.defined;
+                expect(token.error.statusCode).to.be.equal(401);
+                done();
+            })
+        });
+
+    })
 
 });

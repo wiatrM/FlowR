@@ -10,9 +10,17 @@
     "overrides": {
         "bootstrap": {
             "main": [
-                "dist/js/bootstrap.js",
-                "dist/css/bootstrap.css",
-                "less/bootstrap.less"
+                "./dist/js/bootstrap.js",
+                "./dist/css/bootstrap.css",
+                "./dist/fonts/*",
+                "./less/bootstrap.less"
+            ]
+        },
+        "font-awesome": {
+            "main": [
+                "./css/font-awesome.css",
+                "./fonts/*",
+                "./less/font-awesome.less"
             ]
         }
     },
@@ -35,7 +43,8 @@
         "angular-touch": "^1.5.8",
         "bootstrap": "^3.3.7",
         "angular-bootstrap": "^2.0.1",
-        "font-awesome": "^4.6.3"
+        "font-awesome": "^4.6.3",
+        "bootstrap-social": "^5.0.0"
     },
     "scripts": {
         "postinstall": "gulp rebuild:bower"

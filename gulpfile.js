@@ -9,7 +9,6 @@ var uglify = require('gulp-uglify');
 var minifycss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var concat = require('gulp-concat');
-var sass = require('gulp-sass');
 var bower = require('gulp-main-bower-files');
 var angularFilesort = require('gulp-angular-filesort');
 var inject = require('gulp-inject');
@@ -58,12 +57,17 @@ gulp.task('bower', function () {
     var lessFilter = gulpFilter('**/*.less', {
         restore: true
     });
+    var fontsFilter = gulpFilter('**/*.{eot,svg,ttf,woff,woff2}', {
+        restore: true
+    });
+
     // get all main bower files list
     return gulp.src('./bower.json')
         .pipe(bower())
+        .pipe(debug())
+
         // filter only js files
         .pipe(jsFilter)
-
         //concat to vendor.js
         .pipe(concat('vendor.js'))
 
@@ -82,14 +86,12 @@ gulp.task('bower', function () {
         // now take css files
         .pipe(cssFilter)
         .pipe(concat('vendor.css'))
-
         .pipe(config.production ? minifycss() : util.noop())
         //.pipe(config.production ? gzip() : util.noop()) // for now disabled
         .pipe(config.production ? rev() : util.noop())
         .pipe(config.production ? rename({
             suffix: ".min"
         }) : util.noop())
-
         .pipe(gulp.dest(config.buildDestination + '/css'))
         .pipe(cssFilter.restore)
 
@@ -97,14 +99,12 @@ gulp.task('bower', function () {
         .pipe(lessFilter)
         .pipe(concat('vendor.less'))
         .pipe(gulp.dest(config.buildDestination + '/less'))
+        .pipe(lessFilter.restore)
 
         // fonts
-        .pipe(cssFilter.restore)
-        .pipe(rename(function (path) {
-            if (~path.dirname.indexOf('fonts')) {
-                path.dirname = '/fonts'
-            }
-        }));
+        .pipe(fontsFilter)
+        .pipe(flatten())
+        .pipe(gulp.dest(config.buildDestination + '/fonts'));
 });
 
 /**
@@ -151,7 +151,7 @@ gulp.task('inject', function () {
     return gulp.src(config.srcDestination + '/index.template.html')
 
     // inject bower files
-        .pipe(inject(gulp.src([config.buildDestination + '/js/**/*', config.buildDestination + '/css/**/*'], {
+        .pipe(inject(gulp.src([config.buildDestination + '/js/**/*', config.buildDestination + '/css/**/*', config.buildDestination + '/fonts/**/*'], {
             read: false
         }), {
             name: 'bower',
@@ -178,14 +178,11 @@ gulp.task('inject', function () {
 });
 
 /**
- * Task: Compile all SASS files to CSS files.
+ * Task: Copy CSS files.
  */
-gulp.task('sass', function () {
-    return gulp.src(config.srcDestination + '/sass/**/*.scss')
-        .pipe(sass().on('error', sass.logError))
+gulp.task('css', function () {
+    return gulp.src(config.srcDestination + '/css/**/*.css')
         .pipe(concat('app.css'))
-
-        // min/gzip/rev on production
         .pipe(config.production ? minifycss() : util.noop())
         //.pipe(config.production ? gzip() : util.noop()) // for now disabled
         .pipe(config.production ? rev() : util.noop())
@@ -195,6 +192,7 @@ gulp.task('sass', function () {
         .pipe(gulp.dest(config.buildDestination + '/style'));
 });
 
+
 /**
  * Task: Main build task. NOTE: must be run at least ONCE after installation
  */
@@ -203,7 +201,8 @@ gulp.task('build', function (cb) {
     runSequence(
         'clean',
         // those can be done async in paraell for speed-up
-        ['bower', 'app', 'sass'],
+        //['bower', 'app', 'sass'],
+        ['bower', 'app', 'css'],
         // wait for finish than...
         'inject',
         cb
@@ -229,7 +228,8 @@ gulp.task('rebuild:bower', function (cb) {
 gulp.task('rebuild:app', function (cb) {
     // run tasks synchronously
     runSequence(
-        ['app', 'sass'],
+        //['app', 'sass'],
+        ['app', 'css'],
         cb
     )
 });
@@ -248,7 +248,7 @@ gulp.task('test:api', function () {
         .on('finish', function () {
             // Get Mocha tests
             gulp.src('./test/api_integration/**/*.js')
-                .pipe(mocha({reporter: 'nyan'})) // lulz nyan
+                .pipe(mocha({reporter: 'spec'}))
                 .pipe(istanbul.writeReports({
                     dir: './coverage/api-test-coverage',
                     reporters: ['lcov'],
@@ -257,6 +257,14 @@ gulp.task('test:api', function () {
                     }
                 }));
         });
+});
+
+/**
+ * Task: Test api_integration component without coverage report
+ */
+gulp.task('test:api:nocov', function () {
+    return gulp.src('./test/api_integration/**/*.js')
+        .pipe(mocha({reporter: 'spec'}))
 });
 
 /**
@@ -273,7 +281,7 @@ gulp.task('test:server', function () {
         .on('finish', function () {
             // Get Mocha tests
             gulp.src('./test/server/**/*.js')
-                .pipe(mocha({reporter: 'nyan'})) // lulz nyan
+                .pipe(mocha({reporter: 'spec'}))
                 .pipe(istanbul.writeReports({
                     dir: './coverage/server-test-coverage',
                     reporters: ['lcov'],
@@ -285,6 +293,15 @@ gulp.task('test:server', function () {
 });
 
 /**
+ * Task: Test server UT component without coverage report
+ */
+gulp.task('test:server:nocov', function () {
+    // get server code to test coverage...
+    return gulp.src('./test/server/**/*.js')
+        .pipe(mocha({reporter: 'spec'}))
+});
+
+/**
  * Task: Test all components. This will be run by Travis CI after commit.
  */
 gulp.task('test:all', function (cb) {
@@ -293,4 +310,30 @@ gulp.task('test:all', function (cb) {
         'test:api',
         cb
     )
+});
+
+/**
+ * Task: Test all components in fast mode (without code coverage report)
+ */
+gulp.task('test:all:nocov', function (cb) {
+    return runSequence(
+        'test:server:nocov',
+        'test:api:nocov',
+        cb
+    )
+});
+
+/**
+ * Task: Watch for code changes in test than reload the test in fast mode
+ */
+gulp.task('test:watch', function () {
+    gulp.watch('./test/api_integration/**/*.js', ['test:api:nocov']);
+    gulp.watch('./test/server/**/*.js', ['test:server:nocov']);
+});
+
+/**
+ * Task: Watch for code changes in client source than reload the dist folder
+ */
+gulp.task('dev', function () {
+    gulp.watch(config.srcDestination + '/**/*', ['rebuild:app']);
 });

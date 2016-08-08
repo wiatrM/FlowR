@@ -3,7 +3,7 @@
 angular.module('flr.core')
 
 .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'AccessLevels', 'APP_NAME',
-    function($stateProvider, $urlRouterProvider, $locationProvider, AccessLevels, AppName) {
+    function ($stateProvider, $urlRouterProvider, $locationProvider, AccessLevels, AppName) {
 
         $stateProvider
 
@@ -17,21 +17,28 @@ angular.module('flr.core')
                 }
             })
             .state('app.anon.home', {
-                url: "/",
-                templateUrl: "app/core/views/test.html",
+                url: '/',
+                templateUrl: 'app/core/views/test.html',
                 data: {
                     access: AccessLevels.anon,
                     pageTitle: AppName
                 }
             })
-
-        .state('app.anon.404', {
-            url: '/404',
-            //templateUrl: "app/core/views/404.html",
-            data: {
-                access: AccessLevels.anon,
-                pageTitle: '404'
-            }
-        });
+            .state('app.anon.login', {
+                url: '/login',
+                templateUrl: 'app/core/views/login.html',
+                data: {
+                    access: AccessLevels.anon,
+                    pageTitle: AppName
+                }
+            })
+            .state('app.anon.404', {
+                url: '/404',
+                templateUrl: 'app/core/views/404.html',
+                data: {
+                    access: AccessLevels.anon,
+                    pageTitle: '404'
+                }
+            });
     }
 ]);

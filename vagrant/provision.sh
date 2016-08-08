@@ -23,6 +23,13 @@ apt-get install -qq git
 echo Installing PostgreSQL...
 apt-get install -qq postgresql postgresql-contrib
 
+echo Configuring PostgreSQL...
+sudo -u postgres createuser vagrant -s
+sudo -u postgres createdb vagrant
+echo "host all  all    all  trust" >> /etc/postgresql/9.3/main/pg_hba.conf
+echo "listen_addresses='*'" >> /etc/postgresql/9.3/main/postgresql.conf
+sudo service postgresql restart
+
 echo Installing node 6.x...
 curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 sudo apt-get install -y nodejs

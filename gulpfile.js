@@ -201,7 +201,6 @@ gulp.task('build', function (cb) {
     runSequence(
         'clean',
         // those can be done async in paraell for speed-up
-        //['bower', 'app', 'sass'],
         ['bower', 'app', 'css'],
         // wait for finish than...
         'inject',
@@ -228,7 +227,6 @@ gulp.task('rebuild:bower', function (cb) {
 gulp.task('rebuild:app', function (cb) {
     // run tasks synchronously
     runSequence(
-        //['app', 'sass'],
         ['app', 'css'],
         cb
     )

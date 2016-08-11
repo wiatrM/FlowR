@@ -1,45 +1,85 @@
-<div id="login-body">
+<div id="login-body" class="wrapper">
     <div class=row">
-        <div
-            class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12 col-xs-offset-0">
+        <div class="col-md-4 col-md-offset-4 col-sm-8 col-sm-offset-2 col-xs-12 col-xs-offset-0">
             <div class="container-fluid" id="login-container">
-                <div class="form-login">
+
+                <!-- login -->
+                <div class="form-login animate-show" ng-show="divShow == 'login'">
                     <h4>Welocome on FlowR.</h4>
+
+                    <div ng-show="errorMsg != null" class="animate-show">
+                        <div class="msg">
+                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                            {{errorMsg}}
+                        </div>
+                    </div>
+
                     <input type="text" id="userName" class="form-control input-sm chat-input" placeholder="username"/>
                     <input type="text" id="userPassword" class="form-control input-sm chat-input"
                            placeholder="password"/>
-                        <span class="group-btn">
-                            <a href="#" id="login-btn" class="btn btn-primary btn-md">login <i
-                                class="fa fa-sign-in"></i></a>
-                        </span>
+
+                    <button id="login-btn" class="btn btn-default btn-md" ng-click="klik()">login <i
+                                class="fa fa-sign-in"></i></button>
+
                     <hr id="white-hr">
                     or<br>
-                    <a class="btn btn-block btn-social btn-facebook" id="facebook-sign">
-                        <i class="fa fa-facebook" aria-hidden="true"></i>
-                        Sign in with Facebook
-                    </a>
-                    <button class="buttons-wo" id="remind-btn">forgot your password?</button>
-                    <br>
-                    <button class="buttons-wo" id="register-btn">create new account</button>
+
+                    <span class="group-btn">
+                        <button class="btn btn-social btn-facebook" id="facebook-sign">
+                            <i class="fa fa-facebook" aria-hidden="true"></i>
+                            Sign in with Facebook
+                        </button>
+                        <br>
+                        <button class="buttons-wo" id="remind-ng" ng-click="remindOpen()">forgot your password?</button>
+                        <br>
+                        <button class="buttons-wo" id="register-ng" ng-click="registerOpen()">create new account</button>
+                    </span>
                 </div>
+                <!-- end login -->
+
+                <!-- remind password -->
+                <div class="form-login animate-show" ng-show="divShow == 'remind'">
+                    <h4>Remind password.</h4>
+                    <input type="text" id="email" class="form-control input-sm chat-input" placeholder="email"/>
+                    <!--<div ng-show="errorMsg != null" class="animate-show">-->
+                        <!--<div class="msg">-->
+                            <!--<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>-->
+                            <!--{{errorMsg}}-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <button id="remind-btn" class="btn btn-default btn-md" ng-click="">remind <i class="fa fa-share" aria-hidden="true"></i></button>
+                    <br>
+                    <button class="buttons-wo" ng-click="loginOpen()"><i class="fa fa-chevron-left" aria-hidden="true"></i> back to login</button>
+                </div>
+                <!-- end remind password -->
+
+                <!-- register -->
+                <div class="form-login animate-show" ng-show="divShow == 'register'">
+                    <h4>Register new account.</h4>
+                    <input type="text" id="registerName" class="form-control input-sm chat-input" placeholder="username"/>
+                    <input type="text" id="registerPassword" class="form-control input-sm chat-input"
+                           placeholder="password"/>
+                    <input type="text" id="registerConfirmPassword" class="form-control input-sm chat-input"
+                           placeholder="confirm password"/>
+
+                    <!--<div ng-show="errorMsg != null" class="animate-show">-->
+                        <!--<div class="msg">-->
+                            <!--<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>-->
+                            <!--{{errorMsg}}-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                    <button id="register-btn" class="btn btn-default btn-md" ng-click="">register <i
+                        class="fa fa-sign-in"></i></button>
+                    <br>
+                    <button class="buttons-wo" ng-click="loginOpen()"><i class="fa fa-chevron-left" aria-hidden="true"></i> back to login</button>
+                </div>
+                <!-- end register -->
             </div>
         </div>
         <div class="col-lg-4 col-md-3 col-sm-2 col-xs-0">
         </div>
     </div>
 
-    <div id="remind-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <span class="glyphicon glyphicon-remove"></span>
-                <h2>Remind password.</h2>
-            </div>
-            <div class="modal-body">
-                    <input type="text" class="form-control input-sm chat-input" placeholder="username or e-mail"/>
-            </div>
-            <div class="modal-footer">
-                <button href="#" id="send-btn" class="btn btn-primary btn-md">send</button>
-            </div>
-        </div>
-    </div>
+
 </div>

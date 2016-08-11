@@ -27,6 +27,7 @@ angular.module('flr.core')
             .state('app.anon.login', {
                 url: '/login',
                 templateUrl: 'app/core/views/login.html',
+                controller: 'loginController',
                 data: {
                     access: AccessLevels.anon,
                     pageTitle: AppName

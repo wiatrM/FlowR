@@ -50,7 +50,7 @@ module.exports = function (api) {
         }
         if (_.isEmpty(token)) {
             api
-                .post('/api/users/login')
+                .post('/api/Users/login')
                 .send(credentials)
                 .end(function (err, res) {
                     if (res.status == 200) {

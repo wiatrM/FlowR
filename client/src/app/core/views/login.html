@@ -14,11 +14,11 @@
                         </div>
                     </div>
 
-                    <input type="text" id="userName" class="form-control input-sm chat-input" placeholder="username"/>
-                    <input type="text" id="userPassword" class="form-control input-sm chat-input"
+                    <input type="text" name="loginEmail" class="form-control input-sm chat-input" placeholder="username"/>
+                    <input type="password" name="loginPassword" class="form-control input-sm chat-input"
                            placeholder="password"/>
 
-                    <button id="login-btn" class="btn btn-default btn-md" ng-click="klik()">login <i
+                    <button id="login-btn" class="btn btn-default btn-md" ng-click="emailLogin()">login <i
                                 class="fa fa-sign-in"></i></button>
 
                     <hr id="white-hr">
@@ -40,7 +40,7 @@
                 <!-- remind password -->
                 <div class="form-login animate-show" ng-show="divShow == 'remind'">
                     <h4>Remind password.</h4>
-                    <input type="text" id="email" class="form-control input-sm chat-input" placeholder="email"/>
+                    <input type="text" name="reminEmail" class="form-control input-sm chat-input" placeholder="email"/>
                     <!--<div ng-show="errorMsg != null" class="animate-show">-->
                         <!--<div class="msg">-->
                             <!--<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>-->
@@ -56,18 +56,13 @@
                 <!-- register -->
                 <div class="form-login animate-show" ng-show="divShow == 'register'">
                     <h4>Register new account.</h4>
-                    <input type="text" id="registerName" class="form-control input-sm chat-input" placeholder="username"/>
-                    <input type="text" id="registerPassword" class="form-control input-sm chat-input"
+                    <input type="text" name="registerEmail" class="form-control input-sm chat-input" placeholder="email"/>
+                    <input type="password" name="registerPassword" class="form-control input-sm chat-input"
                            placeholder="password"/>
-                    <input type="text" id="registerConfirmPassword" class="form-control input-sm chat-input"
-                           placeholder="confirm password"/>
+                    <!--<input type="password" id="registerConfirmPassword" class="form-control input-sm chat-input"-->
+                           <!--placeholder="confirm password"/>-->
 
-                    <!--<div ng-show="errorMsg != null" class="animate-show">-->
-                        <!--<div class="msg">-->
-                            <!--<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>-->
-                            <!--{{errorMsg}}-->
-                        <!--</div>-->
-                    <!--</div>-->
+                    <p class="text-center text-muted"><small>By clicking on Sign up, you agree to <a href="#">terms & conditions</a> and <a href="#">privacy policy</a></small></p>
 
                     <button id="register-btn" class="btn btn-default btn-md" ng-click="">register <i
                         class="fa fa-sign-in"></i></button>

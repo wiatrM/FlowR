@@ -1,15 +1,16 @@
 (function() {
-    'use strict'
+    'use strict';
 
     angular.module('flr', [
             'ui.bootstrap',
             'ui.router',
             'ngResource',
             'ngAnimate',
+            'satellizer',
 
             //shared modules
             'flr.config',
-            'flr.core',
+            'flr.core'
 
             // other modules will be lazy-loaded from router (fe. flr.admin if user is admin)
         ])

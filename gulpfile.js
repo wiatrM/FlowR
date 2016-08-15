@@ -243,6 +243,7 @@ gulp.task('test:api', function () {
         .pipe(istanbul({
             includeUntested: true
         }))
+        .pipe(istanbul.hookRequire())
         .on('finish', function () {
             // Get Mocha tests
             gulp.src('./test/api_integration/**/*.js')
@@ -276,6 +277,7 @@ gulp.task('test:server', function () {
         .pipe(istanbul({
             includeUntested: true
         }))
+        .pipe(istanbul.hookRequire())
         .on('finish', function () {
             // Get Mocha tests
             gulp.src('./test/server/**/*.js')

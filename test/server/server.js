@@ -10,7 +10,12 @@ describe('Main server functions', function () {
 
         it('should start a server', function (done) {
             app.start(function() {
-                expect(app.get('port')).to.be.equal(3000);
+                expect(app).to.be.defined;
+                expect(app.close).to.be.a('function');
+                expect(app.get).to.be.a('function');
+
+                expect(app.loaded).to.be.equal(true);
+
                 done();
             });
         });

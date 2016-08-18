@@ -2,10 +2,10 @@
     'use strict';
 
     angular.module('flr', [
-            'ui.bootstrap',
             'ui.router',
             'ngResource',
             'ngAnimate',
+            'ngMaterial',
             'satellizer',
 
             //shared modules
@@ -15,7 +15,7 @@
             // other modules will be lazy-loaded from router (fe. flr.admin if user is admin)
         ])
         .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$provide', '$httpProvider',
-            function($stateProvider, $urlRouterProvider, $locationProvider, $provide, $httpProvider) {
+            function($stateProvider, $urlRouterProvider, $locationProvider, $provide, $httpProvider, $authProvider) {
 
                 // Now set up the states
                 $stateProvider
@@ -39,6 +39,13 @@
                 }]);
 
                 $httpProvider.interceptors.push('ErrorInterceptor');
+
+                // $authProvider.loginUrl = '/api/users/login';
+                // $authProvider.signupUrl = '/api/users/register';
+                // $authProvider.oauth2({
+                //     name: 'facebook',
+                //     /*...*/
+                // });
             }
         ]);
 })();

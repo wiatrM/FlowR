@@ -1,0 +1,39 @@
+<md-dialog aria-label="Sign Up">
+    <form ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Sign Up</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancelRegister()">
+                    <i class="mdi mdi-close" aria-hidden="true" aria-label="Close dialog"></i>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <md-input-container class="md-block">
+                    <input ng-model="user.name" type="text" placeholder="Name" ng-required="true">
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <input ng-model="user.email" type="email" placeholder="Email" ng-required="true">
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <input ng-model="user.email" type="email" placeholder="Confirm email" ng-required="true">
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <input ng-model="user.password" type="password" placeholder="Password" ng-required="true">
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <input ng-model="user.password" type="password" placeholder="Confirm password" ng-required="true">
+                </md-input-container>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <md-checkbox md-no-ink aria-label="Checkbox No Ink" ng-model="data.cb5" class="md-primary">
+                I agree to <a href="#">terms & conditions</a> and <a href="#">privacy policy</a>
+            </md-checkbox>
+            <span flex></span>
+            <md-button class="md-raised" type="submit"><b>sign up</b></md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

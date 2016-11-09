@@ -1,23 +1,56 @@
-<div id="login-body" layout="column">
-    <div layout-align="center center" layout="row">
-        <h1>FlowR</h1>
-        <md-whiteframe class="md-whiteframe-1dp" layout="row" layout-align="center center" id="login-container">
-            <md-input-container class="md-block">
-                <input ng-model="user.email" type="email" placeholder="Email">
-            </md-input-container>
-            <md-input-container class="md-block">
-                <input ng-model="user.password" type="password" placeholder="Password">
-            </md-input-container>
-
-            <md-button class="md-raised"><b>login</b></md-button>
-            <br>
-            <md-button class="md-raised" id="facebook-btn" ng-disabled="true">
-                <i class="mdi mdi-facebook" aria-hidden="true"></i>
-                Sign in with Facebook
-            </md-button>
-            <md-button ng-click="showRemind($event)" ng-disabled="true">forgot your password?</md-button>
-            <md-button ng-click="showRegister($event)">create new account</md-button>
-        </md-whiteframe>
-    </div>
-</div>
+<md-content layout="row" ng-controller="loginController as lc" layout-fill ng-cloak md-theme="default">
+    <section layout="column" flex layout-align="center center" class="login">
+        <md-card class="md-whiteframe-4dp">
+            <md-toolbar>
+                <div layout="column" layout-padding layout-align="center center">
+                    <div>
+                        <h1>FlowR</h1>
+                    </div>
+                    <div class="md-headline md-padding">Login</div>
+                </div>
+            </md-toolbar>
+            <md-card-content>
+                <form name="login">
+                    <md-input-container class="md-block">
+                        <label>Email</label>
+                        <input type="email" ng-model="lc.user.email" ng-required="true">
+                    </md-input-container>
+                    <md-input-container class="md-block">
+                        <label>Password</label>
+                        <input type="password" ng-model="lc.user.password" ng-required="true">
+                    </md-input-container>
+                    <div layout="row" layout-align="space-between center"
+                         class="layout-align-space-between-center layout-row">
+                        <md-input-container>
+                            <md-checkbox ng-model="login.rememberMe" ng-disabled="true">Remember me?</md-checkbox>
+                        </md-input-container>
+                        <md-input-container>
+                            <a href="#" class="simplelink" md-theme="default">Forgot password?</a>
+                        </md-input-container>
+                    </div>
+                    <div layout="row" layout-align="center center">
+                        <md-button class="md-raised md-accent" flex="60" ng-click="lc.emailLogin()">Login</md-button>
+                    </div>
+                    <div layout="row" layout-align="center center">
+                        <span layout="row" class="or" flex="40"><hr flex/> OR <hr flex/></span>
+                    </div>
+                    <div layout="row" layout-align="center center">
+                        <md-button class="facebook-btn md-raised" flex="60" ng-click="authenticate('facebook')"
+                                   ng-disabled="true">
+                            <md-icon md-font-icon="mdi mdi-facebook" aria-hidden="true" style="color:white;"></md-icon>
+                            Sign in with Facebook
+                        </md-button>
+                    </div>
+                    <div layout="row" layout-align="space-between center"
+                         class="layout-align-space-between-center layout-row">
+                        <md-input-container>Don't have an account?</md-input-container>
+                        <md-input-container>
+                            <a ui-sref="app.anon.signup" class="simplelink" md-theme="default">Create an account</a>
+                        </md-input-container>
+                    </div>
+                </form>
+            </md-card-content>
+        </md-card>
+    </section>
+</md-content>
 

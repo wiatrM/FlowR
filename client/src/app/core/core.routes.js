@@ -33,6 +33,15 @@ angular.module('flr.core')
                     pageTitle: AppName
                 }
             })
+            .state('app.anon.signup', {
+                url: '/signup',
+                templateUrl: 'app/core/views/signup.html',
+                controller: 'signupController',
+                data: {
+                    access: AccessLevels.anon,
+                    pageTitle: AppName
+                }
+            })
             .state('app.anon.404', {
                 url: '/404',
                 templateUrl: 'app/core/views/404.html',

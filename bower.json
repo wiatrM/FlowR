@@ -1,33 +1,33 @@
 {
-  "name": "flowr",
-  "description": "Task Flow, ToDo List, GTD and Time tracker at once.",
-  "main": "",
-  "authors": [
-    "wiatrM <mwiatr.dev@gmail.com>",
-    "lapek <v@>"
-  ],
-  "license": "Apache-2.0",
-  "overrides": {},
-  "keywords": [
-    "flowr"
-  ],
-  "homepage": "https://github.com/wiatrM/FlowR",
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ],
-  "dependencies": {
-    "angular": "1.5.8",
-    "angular-ui-router": "^0.3.1",
-    "angular-resource": "^1.5.8",
-    "angular-animate": "^1.5.8",
-    "angular-touch": "^1.5.8",
-    "angular-material": "^1.1.0",
-    "satellizer": "^0.15.4",
-    "mdi": "^1.6.50",
-    "roboto-fontface": "^0.5.0"
-  }
+    "name": "flowr",
+    "description": "Task Flow, ToDo List, GTD and Time tracker at once.",
+    "main": "",
+    "authors": [
+        "wiatrM <mwiatr.dev@gmail.com>",
+        "lapek <v@>"
+    ],
+    "license": "Apache-2.0",
+    "overrides": {},
+    "keywords": [
+        "flowr"
+    ],
+    "homepage": "https://github.com/wiatrM/FlowR",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ],
+    "dependencies": {
+        "angular": "1.5.8",
+        "angular-ui-router": "^0.3.1",
+        "angular-resource": "^1.5.8",
+        "angular-animate": "^1.5.8",
+        "angular-touch": "^1.5.8",
+        "angular-material": "^1.1.1",
+        "satellizer": "^0.15.4",
+        "mdi": "^1.6.50",
+        "roboto-fontface": "^0.5.0"
+    }
 }

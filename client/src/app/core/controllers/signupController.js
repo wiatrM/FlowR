@@ -2,10 +2,20 @@
 
 angular.module('flr.core')
     .controller('signupController',
-        function ($scope, $mdDialog) {
+        function ($scope, $auth, $log, $resource, $location, $http) {
 
-            $scope.cancelRegister = function() {
-                $mdDialog.cancel();
+            var vm = this;
+
+            vm.user = {};
+
+            vm.signUp = function () {
+                $auth.signup({username: vm.user.name, email: vm.user.email, password: vm.user.password})
+                    .then(function (response) {
+
+                    })
+                    .catch(function (response) {
+                        console.log("error response", response);
+                    })
             };
-            
+
         });

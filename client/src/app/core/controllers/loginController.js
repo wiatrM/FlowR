@@ -2,40 +2,26 @@
 
 angular.module('flr.core')
     .controller('loginController',
-        function ($scope, $mdDialog, $auth, $log, $resource, $location, $http) {
+        function ($auth, $log, $rootScope) {
 
-            /**
-             * Method showing Dialog Box with Sign Up form.
-             * @param ev
-             */
-            $scope.showRegister = function(ev) {
-                $mdDialog.show({
-                    controller: 'signupController',
-                    templateUrl: 'app/core/views/signup.html',
-                    parent: angular.element(document.body),
-                    targetEvent: ev,
-                    clickOutsideToClose:true,
-                    fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
-                });
+            var vm = this;
+
+            vm.user = {};
+
+            vm.emailLogin = function () {
+                $auth.login({email: vm.user.email, password: vm.user.password})
+                    .then(function (response) {
+                        var user = JSON.stringify(response);
+                        
+                        console.log("login", response);
+                    })
+                    .catch(function (response) {
+                        console.log("error response", response);
+                    });
             };
 
-            $scope.showRemind = function(ev) {
-                
-            };
-
-            // $scope.emailLogin = function() {
-            //     $auth.login({ email: $scope.loginEmail, password: $scope.loginPassword })
-            //         .then(function(response) {
-            //             $window.localStorage.currentUser = JSON.stringify(response.data.user);
-            //             $rootScope.currentUser = JSON.parse($window.localStorage.currentUser);
-            //         })
-            //         .catch(function(response) {
-            //             $scope.errorMsg = response.data.message;
-            //         });
-            // };
-
-            // $scope.facebookLogin = function() {
-            //
+            // $scope.authenticate = function(provider) {
+            //     $auth.authenticate(provider);
             // };
 
         });

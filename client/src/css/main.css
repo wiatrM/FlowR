@@ -1,3 +1,30 @@
 html {
     height: 100%
 }
+
+.login md-card {
+    width: 400px;
+}
+
+.or{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+/* Facebook button style*/
+.md-button.md-raised.facebook-btn{
+    background-color: #2d5f9a;
+    color: white;
+    border: 1px black;
+}
+.md-button.md-raised.facebook-btn:not([disabled]):hover {
+    background-color: rgba(45, 95, 154, 0.93);
+}
+
+a.simplelink:link, a.simplelink:visited {
+    text-decoration: none;
+}
+
+a.simplelink:hover, a.simplelink:active {
+    text-decoration: underline;
+}

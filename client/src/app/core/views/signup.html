@@ -1,39 +1,45 @@
-<md-dialog aria-label="Sign Up">
-    <form ng-cloak>
-        <md-toolbar>
-            <div class="md-toolbar-tools">
-                <h2>Sign Up</h2>
-                <span flex></span>
-                <md-button class="md-icon-button" ng-click="cancelRegister()">
-                    <i class="mdi mdi-close" aria-hidden="true" aria-label="Close dialog"></i>
-                </md-button>
-            </div>
-        </md-toolbar>
-        <md-dialog-content>
-            <div class="md-dialog-content">
-                <md-input-container class="md-block">
-                    <input ng-model="user.name" type="text" placeholder="Name" ng-required="true">
-                </md-input-container>
-                <md-input-container class="md-block">
-                    <input ng-model="user.email" type="email" placeholder="Email" ng-required="true">
-                </md-input-container>
-                <md-input-container class="md-block">
-                    <input ng-model="user.email" type="email" placeholder="Confirm email" ng-required="true">
-                </md-input-container>
-                <md-input-container class="md-block">
-                    <input ng-model="user.password" type="password" placeholder="Password" ng-required="true">
-                </md-input-container>
-                <md-input-container class="md-block">
-                    <input ng-model="user.password" type="password" placeholder="Confirm password" ng-required="true">
-                </md-input-container>
-            </div>
-        </md-dialog-content>
-        <md-dialog-actions layout="row">
-            <md-checkbox md-no-ink aria-label="Checkbox No Ink" ng-model="data.cb5" class="md-primary">
-                I agree to <a href="#">terms & conditions</a> and <a href="#">privacy policy</a>
-            </md-checkbox>
-            <span flex></span>
-            <md-button class="md-raised" type="submit"><b>sign up</b></md-button>
-        </md-dialog-actions>
-    </form>
-</md-dialog>
+<md-content layout="row" ng-controller="signupController as sc" layout-fill ng-cloak md-theme="default">
+    <section layout="column" flex layout-align="center center" class="signup">
+        <md-card class="md-whiteframe-4dp">
+            <md-toolbar>
+                <div layout="column" layout-padding layout-align="center center">
+                    <h2>Sign Up</h2>
+                </div>
+            </md-toolbar>
+            </md-toolbar>
+            <md-card-content>
+                <form name="signup">
+                    <md-input-container class="md-block">
+                        <input ng-model="sc.user.name" type="text" placeholder="Name" ng-required="true">
+                    </md-input-container>
+                    <md-input-container class="md-block">
+                        <input ng-model="sc.user.email" type="email" placeholder="Email" ng-required="true">
+                    </md-input-container>
+                    <!--<md-input-container class="md-block">-->
+                    <!--<input ng-model="sc.user.confirmEmail" type="email" placeholder="Confirm email" ng-required="true">-->
+                    <!--</md-input-container>-->
+                    <md-input-container class="md-block">
+                        <input ng-model="sc.user.password" type="password" placeholder="Password" ng-required="true">
+                    </md-input-container>
+                    <!--<md-input-container class="md-block">-->
+                    <!--<input ng-model="sc.user.confirmPassword" type="password" placeholder="Confirm password"-->
+                    <!--ng-required="true">-->
+                    <!--</md-input-container>-->
+                    <md-checkbox md-no-ink class="md-primary" ng-disabled="true">
+                        I read and accept <a href="#" class="simplelink" md-theme="default">terms and conditions</a>
+                    </md-checkbox>
+                    <div layout="row" layout-align="center center">
+                        <md-button class="md-raised md-accent" flex="60" ng-click="sc.signUp()">Sign Up</md-button>
+                    </div>
+                    <div layout="row" layout-align="space-between center"
+                         class="layout-align-space-between-center layout-row">
+                        <md-input-container>Already have an account?</md-input-container>
+                        <md-input-container>
+                            <a ui-sref="app.anon.login" class="simplelink" md-theme="default">Log in</a>
+                        </md-input-container>
+                    </div>
+                </form>
+            </md-card-content>
+        </md-card>
+    </section>
+</md-content>

@@ -57,7 +57,10 @@ gulp.task('bower', function () {
     var lessFilter = gulpFilter('**/*.less', {
         restore: true
     });
-    var fontsFilter = gulpFilter('**/*.{eot,svg,ttf,woff,woff2}', {
+    var robotoFontsFilter = gulpFilter('**/roboto-fontface/**/*.{eot,svg,ttf,woff,woff2}', {
+        restore: true
+    });
+    var fontsFilter = gulpFilter(['**/*.{eot,svg,ttf,woff,woff2}', '!**/roboto-fontface/**/*.{eot,svg,ttf,woff,woff2}'], {
         restore: true
     });
 
@@ -101,10 +104,17 @@ gulp.task('bower', function () {
         .pipe(gulp.dest(config.buildDestination + '/less'))
         .pipe(lessFilter.restore)
 
-        // fonts
+        // roboto fonts
+        .pipe(robotoFontsFilter)
+        .pipe(flatten({includeParents: -1}))
+        .pipe(gulp.dest(config.buildDestination + '/fonts'))
+        .pipe(robotoFontsFilter.restore)
+        // others fonts
         .pipe(fontsFilter)
         .pipe(flatten())
-        .pipe(gulp.dest(config.buildDestination + '/fonts'));
+        .pipe(gulp.dest(config.buildDestination + '/fonts'))// bug: still include /roboto-fontface/
+        .pipe(fontsFilter.restore);
+
 });
 
 /**

@@ -13,11 +13,19 @@
                 <form name="login">
                     <md-input-container class="md-block">
                         <label>Email</label>
-                        <input type="email" ng-model="lc.user.email" ng-required="true">
+                        <input name="email" type="email" ng-model="lc.user.email" required>
+                        <div ng-messages="login.email.$error" ng-show="login.email.$dirty">
+                            <div ng-message="required">Please enter an email.</div>
+                            <div ng-message="email">Please enter your email address correctly.</div>
+                        </div>
                     </md-input-container>
                     <md-input-container class="md-block">
                         <label>Password</label>
-                        <input type="password" ng-model="lc.user.password" ng-required="true">
+                        <input name="password" type="password" ng-model="lc.user.password" required minlength="6">
+                        <div ng-messages="login.password.$error" ng-show="login.password.$dirty">
+                            <div ng-message="required">Please enter a password.</div>
+                            <div ng-message="minlength">That's too short.</div>
+                        </div>
                     </md-input-container>
                     <div layout="row" layout-align="space-between center"
                          class="layout-align-space-between-center layout-row">
@@ -29,7 +37,7 @@
                         </md-input-container>
                     </div>
                     <div layout="row" layout-align="center center">
-                        <md-button class="md-raised md-accent" flex="60" ng-click="lc.emailLogin()">Login</md-button>
+                        <md-button ng-disabled="login.$invalid" class="md-raised md-accent" flex="60" ng-click="lc.emailLogin()">Login</md-button>
                     </div>
                     <div layout="row" layout-align="center center">
                         <span layout="row" class="or" flex="40"><hr flex/> OR <hr flex/></span>
@@ -53,4 +61,3 @@
         </md-card>
     </section>
 </md-content>
-

@@ -5,6 +5,7 @@
             'ui.router',
             'ngResource',
             'ngAnimate',
+            'ngMessages',
             'ngMaterial',
             'satellizer',
 

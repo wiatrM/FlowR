@@ -15,8 +15,8 @@
 
             // other modules will be lazy-loaded from router (fe. flr.admin if user is admin)
         ])
-        .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$provide', '$httpProvider', '$authProvider', '$mdThemingProvider',
-            function($stateProvider, $urlRouterProvider, $locationProvider, $provide, $httpProvider, $authProvider, $mdThemingProvider) {
+        .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$provide', '$httpProvider', '$authProvider', 
+            function($stateProvider, $urlRouterProvider, $locationProvider, $provide, $httpProvider, $authProvider) {
 
                 // Now set up the states
                 $stateProvider
@@ -40,36 +40,13 @@
                 }]);
 
                 $httpProvider.interceptors.push('ErrorInterceptor');
-
-                /**
-                 * Themes
-                 */
-                $mdThemingProvider.definePalette('app-blue', $mdThemingProvider.extendPalette('blue', {
-                    '50': '#DCEFFF',
-                    '100': '#AAD1F9',
-                    '200': '#7BB8F5',
-                    '300': '#4C9EF1',
-                    '400': '#1C85ED',
-                    '500': '#106CC8',
-                    '600': '#0159A2',
-                    '700': '#025EE9',
-                    '800': '#014AB6',
-                    '900': '#013583',
-                    'contrastDefaultColor': 'light',
-                    'contrastDarkColors': '50 100 200 A100',
-                    'contrastStrongLightColors': '300 400 A200 A400'
-                }));
-                $mdThemingProvider.definePalette('app-light-blue', $mdThemingProvider.extendPalette('indigo', {
-                    'A200': '#40C4FF'
-                }));
-                $mdThemingProvider.theme('default')
-                    .primaryPalette('app-blue')
-                    .accentPalette('app-light-blue');
-
+                
+                // Satellizer config
                 $authProvider.baseUrl = '/';
                 $authProvider.loginUrl =  'api/Users/login';
                 $authProvider.signupUrl = 'api/Users';
                 $authProvider.tokenName = 'id';
+                $authProvider.loginOnSignup = false; //turn off automatically login after register
 
                 // // Facebook
                 // $authProvider.facebook({

@@ -1,6 +1,16 @@
 {
-    "db": {
-        "name": "db",
-        "connector": "memory"
-    }
+  "db": {
+    "name": "db",
+    "connector": "memory"
+  },
+  "postgres": {
+    "host": "/var/run/postgresql/",
+    "port": 5432,
+    "database": "vagrant",
+    "password": "vagrant",
+    "name": "postgres",
+    "user": "vagrant",
+    "debug": true,
+    "connector": "postgresql"
+  }
 }

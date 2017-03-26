@@ -20,14 +20,14 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "1.6.0",
-    "angular-ui-router": "^0.3.2",
-    "angular-resource": "^1.6.0",
-    "angular-animate": "^1.6.0",
-    "angular-touch": "^1.6.0",
+    "angular": "1.6.3",
+    "angular-ui-router": "^0.4.2",
+    "angular-resource": "^1.6.3",
+    "angular-animate": "^1.6.3",
+    "angular-touch": "^1.6.3",
     "angular-material": "^1.1.1",
     "satellizer": "^0.15.5",
     "mdi": "^1.7.22",
-    "roboto-fontface": "^0.6.0"
+    "roboto-fontface": "^0.7.0"
   }
 }

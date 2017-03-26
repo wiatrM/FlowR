@@ -38,6 +38,9 @@ client/bower_components
 # Cloud9 editor
 .c9
 
+# Visual Studio Code editor
+.vscode
+
 # Bower specific
 .bower-tmp
 .bower-registry

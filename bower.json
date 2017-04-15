@@ -20,12 +20,12 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "1.6.3",
+    "angular": "^1.6.4",
     "angular-ui-router": "^0.4.2",
-    "angular-resource": "^1.6.3",
-    "angular-animate": "^1.6.3",
-    "angular-touch": "^1.6.3",
-    "angular-material": "^1.1.1",
+    "angular-resource": "^1.6.4",
+    "angular-animate": "^1.6.4",
+    "angular-touch": "^1.6.4",
+    "angular-material": "^1.1.3",
     "satellizer": "^0.15.5",
     "mdi": "^1.7.22",
     "roboto-fontface": "^0.7.0"

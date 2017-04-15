@@ -39,7 +39,7 @@ gulp.task('clean', function () {
         config.tmpDestination + '/**/*',
         '!' + config.tmpDestination + '/README.md',
         config.buildDestination + '/**/*',
-        '!' + config.buildDestination + '/README.md',
+        '!' + config.buildDestination + '/README.md'
     ]);
 });
 
@@ -264,7 +264,12 @@ gulp.task('test:api', function () {
                     reportOpts: {
                         dir: './coverage/api-test-coverage'
                     }
-                }));
+                }))
+                .once('error', function () {
+                    process.exit(1);
+                }).once('end', function () {
+                process.exit();
+            });
         });
 });
 

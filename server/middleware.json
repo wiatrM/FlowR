@@ -15,7 +15,7 @@
     "helmet#frameguard": {
       "params": [
         "deny"
-       ]
+      ]
     },
     "helmet#hsts": {
       "params": {
@@ -51,6 +51,8 @@
   "final:after": {
     "strong-error-handler": {
       "params": {
+        "debug": false,
+        "log": false,
         "includeStack": true
       }
     }

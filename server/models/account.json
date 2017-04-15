@@ -7,13 +7,16 @@
   },
   "properties": {
     "email": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "createdAt": {
-      "type": "date"
+      "type": "date",
+      "required": true
     },
     "lastModifiedAt": {
-      "type": "date"
+      "type": "date",
+      "required": true
     }
   },
   "validations": [],

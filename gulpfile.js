@@ -47,7 +47,7 @@ gulp.task('clean', function () {
  * Task: Grab all main vendor files from bower dep list, concat, rename, minify/uglify on production only,
  * SAVE THEM TO client/dist
  */
-gulp.task('bower', function () {
+gulp.task('bower', ['fonts'], function () {
     var jsFilter = gulpFilter('**/*.js', {
         restore: true
     });
@@ -55,12 +55,6 @@ gulp.task('bower', function () {
         restore: true
     });
     var lessFilter = gulpFilter('**/*.less', {
-        restore: true
-    });
-    var robotoFontsFilter = gulpFilter('**/roboto-fontface/**/*.{eot,svg,ttf,woff,woff2}', {
-        restore: true
-    });
-    var fontsFilter = gulpFilter(['**/*.{eot,svg,ttf,woff,woff2}', '!**/roboto-fontface/**/*.{eot,svg,ttf,woff,woff2}'], {
         restore: true
     });
 
@@ -102,18 +96,38 @@ gulp.task('bower', function () {
         .pipe(lessFilter)
         .pipe(concat('vendor.less'))
         .pipe(gulp.dest(config.buildDestination + '/less'))
-        .pipe(lessFilter.restore)
+        .pipe(lessFilter.restore);
+
+});
+
+/**
+ * Task: Grab specific fonts files from bower dep list
+ * SAVE THEM TO client/dist
+ */
+gulp.task('fonts', function () {
+    var robotoFontsFilter = gulpFilter('**/roboto-fontface/**/*.{eot,svg,ttf,woff,woff2}', {
+        restore: true
+    });
+    var mdiFontsFilter = gulpFilter('**/mdi/**/*.{eot,svg,ttf,woff,woff2}', {
+        restore: true
+    });
+
+    // get all main bower files list
+    return gulp.src('./bower.json')
+        .pipe(bower())
+        .pipe(debug())
 
         // roboto fonts
         .pipe(robotoFontsFilter)
         .pipe(flatten({includeParents: -1}))
         .pipe(gulp.dest(config.buildDestination + '/fonts'))
         .pipe(robotoFontsFilter.restore)
-        // others fonts
-        .pipe(fontsFilter)
+
+        // mdi fonts
+        .pipe(mdiFontsFilter)
         .pipe(flatten())
-        .pipe(gulp.dest(config.buildDestination + '/fonts'))// bug: still include /roboto-fontface/
-        .pipe(fontsFilter.restore);
+        .pipe(gulp.dest(config.buildDestination + '/fonts'))
+        .pipe(mdiFontsFilter.restore);
 
 });
 

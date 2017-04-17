@@ -7,7 +7,20 @@
     "lapek <piotrlapa.dt@gmail.com>"
   ],
   "license": "Apache-2.0",
-  "overrides": {},
+  "overrides": {
+    "roboto-fontface": {
+      "main": [
+        "./css/roboto/roboto-fontface.css",
+        "./fonts/Roboto/*"
+      ]
+    },
+    "mdi": {
+      "main": [
+        "./css/materialdesignicons.css",
+        "./fonts/*"
+      ]
+    }
+  },
   "keywords": [
     "flowr"
   ],

@@ -1,17 +1,22 @@
-<!-- navbar -->
-
-<!-- / navbar -->
-
-<!-- menu -->
-
-<!-- / menu -->
-
-<!-- content -->
-<div ui-view="">
-
+<div layout="column" flex>
+    <!-- navbar -->
+    <md-toolbar ui-view="navbar" flex>
+    </md-toolbar>
+    <!-- / navbar -->
+    <div layout="column" layout-fill flex>
+        <div layout="row" flex>
+            <!-- sidebar -->
+            <md-sidenav ui-view="sidebar" flex>
+            </md-sidenav>
+            <!-- / sidebar -->
+            <!-- content -->
+            <md-content ui-view="content" id="content" flex>
+            </md-content>
+            <!-- /content -->
+        </div>
+        <!-- footer -->
+        <md-bottom-sheet ui-view="footer">
+        </md-bottom-sheet>
+        <!-- / footer -->
+    </div>
 </div>
-<!-- /content -->
-
-<!-- footer -->
-
-<!-- / footer -->

@@ -1,4 +1,4 @@
-'use strict';
+
 
 var gulp = require('gulp');
 
@@ -131,6 +131,16 @@ gulp.task('fonts', function () {
 
 });
 
+
+/**
+ * Task: Copy favicon.
+ * SAVE THEM TO client/dist
+ */
+gulp.task('favicon', function () {
+    return gulp.src(config.srcDestination + '/favicon.ico')
+        .pipe(gulp.dest(config.buildDestination));
+});
+
 /**
  * Task: Grab all app angular files from project, concat, rename, minify/uglify on production only,
  * SAVE THEM TO client/dist
@@ -175,7 +185,7 @@ gulp.task('inject', function () {
     return gulp.src(config.srcDestination + '/index.template.html')
 
     // inject bower files
-        .pipe(inject(gulp.src([config.buildDestination + '/js/**/*', config.buildDestination + '/css/**/*', config.buildDestination + '/fonts/**/*'], {
+        .pipe(inject(gulp.src([config.buildDestination + '/js/**/*', config.buildDestination + '/css/**/*'], {
             read: false
         }), {
             name: 'bower',
@@ -225,7 +235,7 @@ gulp.task('build', function (cb) {
     runSequence(
         'clean',
         // those can be done async in paraell for speed-up
-        ['bower', 'app', 'css'],
+        ['bower', 'app', 'css', 'favicon'],
         // wait for finish than...
         'inject',
         cb

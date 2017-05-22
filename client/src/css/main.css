@@ -1,12 +1,20 @@
-html {
-    height: 100%
+html, body {
+    overflow: hidden !important;
 }
 
-.login md-card{
+#main {
+    top: 0;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+
+.login md-card {
     width: 400px;
 }
 
-.signup md-card{
+.signup md-card {
     width: 400px;
 }
 
@@ -45,16 +53,44 @@ a.simple-link:hover, a.simple-link:active {
     text-decoration: underline;
 }
 
-.notfound {
-    background-color: #f1f1f1;
-    color: #fff;
-    font-size: 12em;
-    font-weight: bold;
-    font-family: Helvetica;
-    text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0, 0, 0, .1), 0 0 5px rgba(0, 0, 0, .1), 0 1px 3px rgba(0, 0, 0, .3), 0 3px 5px rgba(0, 0, 0, .2), 0 5px 10px rgba(0, 0, 0, .25), 0 10px 10px rgba(0, 0, 0, .2), 0 20px 20px rgba(0, 0, 0, .15);
+md-content {
+    top: 0;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
 }
 
-/* Hint styles like ng-messages*/
+/* 404 page */
+#not-found {
+    background-color: #f0f0f0;
+    color: #000;
+    text-align: center;
+}
+
+#not-found .content {
+    width: 90%;
+    max-width: 512px;
+}
+
+#not-found .code-404 {
+    font-size: 112px;
+    line-height: 1;
+    margin-bottom: 16px;
+    font-weight: 500;
+}
+
+#not-found .message {
+    font-size: 24px;
+    color: rgba(0,0,0,.54);
+}
+
+#not-found .back-link {
+    font-size: 15px;
+    margin-top: 25px;
+}
+
+/* Hint style like ng-messages*/
 .hint {
     position: absolute;
     left: 2px;

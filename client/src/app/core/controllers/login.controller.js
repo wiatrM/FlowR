@@ -28,6 +28,7 @@ angular.module('flr.core')
                     })
                     .catch(function (response) {
                         vm.errorMessage = 'Invalid email or password.';
+                        vm.user.password = '';
                         console.log("error: ", response.data.error.message);
                     });
             }

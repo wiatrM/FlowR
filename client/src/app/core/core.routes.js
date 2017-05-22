@@ -9,44 +9,77 @@ angular.module('flr.core')
                 .state('app.anon', {
                     abstract: true,
                     // ui view will provide nested-views function - better than ng-view
-                    template: '<ui-view/>',
                     data: {
                         // Check with access service
                         access: AccessLevels.anon
+                    },
+                    views: {
+                        'main@': {
+                            templateUrl: 'app/core/views/layout.html'
+                        },
+                        'navbar@app': {
+                            templateUrl: 'app/core/views/partials/anon.navbar.html',
+                            controller: 'navbarController'
+                        },
+                        'sidebar@app': {
+                            templateUrl: 'app/core/views/partials/anon.sidebar.html',
+                            controller: 'sidebarController'
+                        },
+                        'footer@app': {
+                            templateUrl: 'app/core/views/partials/anon.footer.html',
+                            controller: 'footerController'
+                        }
                     }
                 })
                 .state('app.anon.home', {
                     url: '/',
-                    templateUrl: 'app/core/views/test.html',
                     data: {
                         access: AccessLevels.anon,
                         pageTitle: AppName
+                    },
+                    views: {
+                        'content@app': {
+                            templateUrl: 'app/core/views/test.html'
+                        }
                     }
                 })
                 .state('app.anon.login', {
                     url: '/login',
-                    templateUrl: 'app/core/views/login.html',
-                    controller: 'loginController',
                     data: {
                         access: AccessLevels.anon,
                         pageTitle: AppName
+                    },
+                    views: {
+                        'content@app': {
+                            templateUrl: 'app/core/views/login.html',
+                            controller: 'loginController as loginVm'
+                        }
                     }
                 })
                 .state('app.anon.signup', {
                     url: '/signup',
-                    templateUrl: 'app/core/views/signup.html',
-                    controller: 'signupController',
                     data: {
                         access: AccessLevels.anon,
                         pageTitle: AppName
+                    },
+                    views: {
+                        'content@app': {
+                            templateUrl: 'app/core/views/signup.html',
+                            controller: 'signupController as signVm'
+                        }
                     }
                 })
                 .state('app.anon.404', {
                     url: '/404',
-                    templateUrl: 'app/core/views/404.html',
+                    preload: true,
                     data: {
                         access: AccessLevels.anon,
                         pageTitle: '404'
+                    },
+                    views: {
+                        'content@app': {
+                            templateUrl: 'app/core/views/404.html'
+                        }
                     }
                 });
         }

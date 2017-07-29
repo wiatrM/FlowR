@@ -1,4 +1,8 @@
-html, body {
+html {
+    overflow: hidden !important;
+}
+
+body {
     overflow: hidden !important;
 }
 
@@ -10,20 +14,24 @@ html, body {
     left: 0;
 }
 
-.login md-card {
-    width: 400px;
+.login {
+    md-card {
+        width: 400px;
+    }
 }
 
-.signup md-card {
-    width: 400px;
+.signup {
+    md-card {
+        width: 400px;
+    }
 }
 
-span.or-pad {
+.or-pad {
     padding-top: 10px;
     padding-bottom: 10px;
 }
 
-hr.or {
+.or {
     border: 0;
     height: 1px;
     background-image: -webkit-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
@@ -32,25 +40,38 @@ hr.or {
     background-image: -o-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
 }
 
-/* Facebook button style*/
 .md-button.md-raised.facebook-btn {
     background-color: #2d5f9a;
     color: white;
     border: 1px black;
+
+    &:not([disabled]) {
+        &:hover {
+            background-color: RGBA(45, 95, 154, 0.93);
+        }
+    }
 }
 
-.md-button.md-raised.facebook-btn:not([disabled]):hover {
-    background-color: rgba(45, 95, 154, 0.93);
-}
+a.simple-link {
+    &:link {
+        color: rgb(16, 108, 200);
+        text-decoration: none;
+    }
 
-a.simple-link:link, a.simple-link:visited {
-    color: rgb(16, 108, 200);
-    text-decoration: none;
-}
+    &:visited {
+        color: rgb(16, 108, 200);
+        text-decoration: none;
+    }
 
-a.simple-link:hover, a.simple-link:active {
-    color: rgb(16, 108, 200);
-    text-decoration: underline;
+    &:hover {
+        color: rgb(16, 108, 200);
+        text-decoration: underline;
+    }
+
+    &:active {
+        color: rgb(16, 108, 200);
+        text-decoration: underline;
+    }
 }
 
 md-content {
@@ -61,36 +82,34 @@ md-content {
     left: 0;
 }
 
-/* 404 page */
 #not-found {
     background-color: #f0f0f0;
     color: #000;
     text-align: center;
+
+    .content {
+        width: 90%;
+        max-width: 512px;
+    }
+
+    .code-404 {
+        font-size: 112px;
+        line-height: 1;
+        margin-bottom: 16px;
+        font-weight: 500;
+    }
+
+    .message {
+        font-size: 24px;
+        color: rgba(0,0,0,0.54);
+    }
+
+    .back-link {
+        font-size: 15px;
+        margin-top: 25px;
+    }
 }
 
-#not-found .content {
-    width: 90%;
-    max-width: 512px;
-}
-
-#not-found .code-404 {
-    font-size: 112px;
-    line-height: 1;
-    margin-bottom: 16px;
-    font-weight: 500;
-}
-
-#not-found .message {
-    font-size: 24px;
-    color: rgba(0,0,0,.54);
-}
-
-#not-found .back-link {
-    font-size: 15px;
-    margin-top: 25px;
-}
-
-/* Hint style like ng-messages*/
 .hint {
     position: absolute;
     left: 2px;

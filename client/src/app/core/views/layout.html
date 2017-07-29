@@ -4,16 +4,16 @@
     </md-toolbar>
     <!-- / navbar -->
     <div layout="column" layout-fill flex>
-        <div layout="row" flex>
+        <section layout="row" flex>
             <!-- sidebar -->
-            <md-sidenav ui-view="sidebar" flex>
-            </md-sidenav>
+            <div ui-view="sidebar" flex>
+            </div>
             <!-- / sidebar -->
             <!-- content -->
             <md-content ui-view="content" id="content" flex>
             </md-content>
             <!-- /content -->
-        </div>
+        </section>
         <!-- footer -->
         <md-bottom-sheet ui-view="footer">
         </md-bottom-sheet>

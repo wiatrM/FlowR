@@ -5,7 +5,13 @@ angular.module('flr.core')
     .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'AccessLevels', 'APP_NAME',
         function ($stateProvider, $urlRouterProvider, $locationProvider, AccessLevels, AppName) {
 
+            // Now set up the states
             $stateProvider
+            // NESTED VIEWS! all states in different modules with app. prefix will include this abstract state with layout.html
+                .state('app', {
+                    abstract: true,
+                    templateUrl: 'app/core/views/layout.html'
+                })
                 .state('app.anon', {
                     abstract: true,
                     // ui view will provide nested-views function - better than ng-view
@@ -14,12 +20,9 @@ angular.module('flr.core')
                         access: AccessLevels.anon
                     },
                     views: {
-                        'main@': {
-                            templateUrl: 'app/core/views/layout.html'
-                        },
                         'navbar@app': {
                             templateUrl: 'app/core/views/partials/anon.navbar.html',
-                            controller: 'navbarController'
+                            controller: 'navbarController as nVM'
                         },
                         'sidebar@app': {
                             templateUrl: 'app/core/views/partials/anon.sidebar.html',

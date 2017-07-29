@@ -1,4 +1,4 @@
-
+'use strict';
 
 var gulp = require('gulp');
 
@@ -7,6 +7,8 @@ var flatten = require('gulp-flatten');
 var gulpFilter = require('gulp-filter');
 var uglify = require('gulp-uglify');
 var minifycss = require('gulp-minify-css');
+var minhtml = require('gulp-htmlmin');
+var less = require('gulp-less');
 var rename = require('gulp-rename');
 var concat = require('gulp-concat');
 var bower = require('gulp-main-bower-files');
@@ -154,6 +156,10 @@ gulp.task('app', function () {
     });
     return gulp.src(config.srcDestination + '/app/**/*')
         .pipe(htmlFilter)
+        .pipe(config.production ? minhtml({
+            collapseWhitespace: true,
+            removeComments: true
+        }) : util.noop())
         .pipe(gulp.dest(config.buildDestination + '/app', {
             global: '.'
         }))
@@ -207,15 +213,21 @@ gulp.task('inject', function () {
                 name: 'app',
                 ignorePath: 'client/dist'
             }))
+        .pipe(config.production ? minhtml({
+            collapseWhitespace: true,
+            removeComments: true
+        }) : util.noop())
         .pipe(rename('index.html'))
         .pipe(gulp.dest(config.buildDestination));
 });
 
 /**
- * Task: Copy CSS files.
+ * Task: Grab all app .less files from project, minify on production only,
+ * SAVE THEM TO client/dist
  */
-gulp.task('css', function () {
-    return gulp.src(config.srcDestination + '/css/**/*.css')
+gulp.task('less', function () {
+    return gulp.src(config.srcDestination + '/less/**/*.less')
+        .pipe(less())
         .pipe(concat('app.css'))
         .pipe(config.production ? minifycss() : util.noop())
         //.pipe(config.production ? gzip() : util.noop()) // for now disabled
@@ -226,7 +238,6 @@ gulp.task('css', function () {
         .pipe(gulp.dest(config.buildDestination + '/style'));
 });
 
-
 /**
  * Task: Main build task. NOTE: must be run at least ONCE after installation
  */
@@ -235,7 +246,7 @@ gulp.task('build', function (cb) {
     runSequence(
         'clean',
         // those can be done async in paraell for speed-up
-        ['bower', 'app', 'css', 'favicon'],
+        ['bower', 'app', 'less', 'favicon'],
         // wait for finish than...
         'inject',
         cb
@@ -261,7 +272,7 @@ gulp.task('rebuild:bower', function (cb) {
 gulp.task('rebuild:app', function (cb) {
     // run tasks synchronously
     runSequence(
-        ['app', 'css'],
+        ['app', 'less'],
         cb
     )
 });

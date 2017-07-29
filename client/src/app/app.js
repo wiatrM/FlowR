@@ -19,18 +19,10 @@
         .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$provide', '$httpProvider', '$authProvider',
             function ($stateProvider, $urlRouterProvider, $locationProvider, $provide, $httpProvider, $authProvider) {
 
-                // Now set up the states
-                $stateProvider
-                // NESTED VIEWS! all states in different modules with app. prefix will include this abstract state with layout.html
-                    .state('app', {
-                        abstract: true,
-                        templateUrl: '/app/core/views/layout.html' // layout template
-                    });
                 $urlRouterProvider.otherwise("/404");
                 $locationProvider.html5Mode(true);
 
                 // error handling
-
                 $provide.factory('ErrorInterceptor', ['$q', function ($q) {
                     return {
                         responseError: function (rejection) {

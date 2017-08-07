@@ -53,7 +53,7 @@ module.exports = function (api) {
                 .post('/api/Users/login')
                 .send(credentials)
                 .end(function (err, res) {
-                    if (res.status == 200) {
+                    if (res.status === 200) {
                         // login is OK
                         token.token = res.body.id;
                         token.userId = res.body.userId;

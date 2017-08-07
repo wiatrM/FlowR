@@ -14,25 +14,23 @@
     ]
   },
   "User": {
-    "dataSource": "db"
+    "dataSource": "postgres",
+    "public": true
   },
   "AccessToken": {
-    "dataSource": "db",
+    "dataSource": "postgres",
     "public": false
   },
   "ACL": {
-    "dataSource": "db",
+    "dataSource": "postgres",
     "public": false
   },
   "RoleMapping": {
-    "dataSource": "db",
-    "public": false,
-    "options": {
-      "strictObjectIDCoercion": true
-    }
+    "dataSource": "postgres",
+    "public": false
   },
   "Role": {
-    "dataSource": "db",
+    "dataSource": "postgres",
     "public": false
   },
   "Account": {

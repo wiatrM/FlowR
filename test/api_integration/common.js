@@ -13,9 +13,9 @@ describe('Common', function () {
             utils.json('get', '/api/wrongroute')
                 .expect(404)
                 .end(function (err, res) {
-                    expect(res.body.error).to.be.defined;
                     expect(res.body.error.name).to.be.equal("Error");
                     expect(res.body.error.message).to.be.equal("There is no method to handle GET /wrongroute");
+                    expect(res.body.error.statusCode).to.be.equal(404);
                     done();
                 });
         });

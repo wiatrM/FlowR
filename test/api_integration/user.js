@@ -13,7 +13,9 @@ describe('User', function () {
             utils.json('get', '/api/users')
                 .expect(401)
                 .end(function (err, res) {
-                    expect(res.body.error).to.be.defined;
+                    expect(res.body.error.name).to.be.equal("Error");
+                    expect(res.body.error.message).to.be.equal("Authorization Required");
+                    expect(res.body.error.statusCode).to.be.equal(401);
                     done();
                 });
         });
@@ -23,8 +25,9 @@ describe('User', function () {
     describe('Authorization', function () {
 
         it('should reject login with bad credentials', function (done) {
-            utils.login(true, function(token) {
-                expect(token.error).to.be.defined;
+            utils.login(true, function (token) {
+                expect(token.error.name).to.be.equal("Error");
+                expect(token.error.message).to.be.equal("login failed");
                 expect(token.error.statusCode).to.be.equal(401);
                 done();
             })

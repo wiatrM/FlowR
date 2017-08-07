@@ -193,11 +193,11 @@ gulp.task('inject', function () {
     // inject bower files
         .pipe(inject(
             gulp.src([config.buildDestination + '/js/**/*', config.buildDestination + '/css/**/*'], {
-            read: false
-        }), {
-            name: 'bower',
-            ignorePath: 'client/dist'
-        }))
+                read: false
+            }), {
+                name: 'bower',
+                ignorePath: 'client/dist'
+            }))
 
         // inject app js files
         .pipe(inject(
@@ -218,12 +218,12 @@ gulp.task('inject', function () {
         //inject splash screen
         .pipe(inject(
             gulp.src(config.buildDestination + '/app/core/views/splash-screen.html'), {
-            starttag: '<!-- inject:splash-screen -->',
-            transform: function (filePath, file) {
-                // return file contents as string
-                return file.contents.toString('utf8')
-            }
-        }))
+                starttag: '<!-- inject:splash-screen -->',
+                transform: function (filePath, file) {
+                    // return file contents as string
+                    return file.contents.toString('utf8')
+                }
+            }))
 
         // minify html on production
         .pipe(config.production ? minhtml({
@@ -327,6 +327,11 @@ gulp.task('test:api', function () {
 gulp.task('test:api:nocov', function () {
     return gulp.src('./test/api_integration/**/*.js')
         .pipe(mocha({reporter: 'spec'}))
+        .once('error', function () {
+            process.exit(1);
+        }).once('end', function () {
+            process.exit();
+        });
 });
 
 /**
@@ -351,7 +356,12 @@ gulp.task('test:server', function () {
                     reportOpts: {
                         dir: './coverage/server-test-coverage'
                     }
-                }));
+                }))
+                .once('error', function () {
+                    process.exit(1);
+                }).once('end', function () {
+                process.exit();
+            });
         });
 });
 
@@ -362,28 +372,53 @@ gulp.task('test:server:nocov', function () {
     // get server code to test coverage...
     return gulp.src('./test/server/**/*.js')
         .pipe(mocha({reporter: 'spec'}))
+        .once('error', function () {
+            process.exit(1);
+        }).once('end', function () {
+            process.exit();
+        });
 });
 
 /**
- * Task: Test all components. This will be run by Travis CI after commit.
+ * Task: Test server UT and api_integration components and returns one common coverage report.
+ * This will be run by Travis CI after commit.
  */
-gulp.task('test:all', function (cb) {
-    return runSequence(
-        'test:server',
-        'test:api',
-        cb
-    )
+gulp.task('test:all', function () {
+    return gulp.src('./server/**/*.js')
+        .pipe(istanbul({
+            includeUntested: true
+        }))
+        .pipe(istanbul.hookRequire())
+        .on('finish', function () {
+            // Get Mocha tests
+            gulp.src(['./test/server/**/*.js', './test/api_integration/**/*.js'])
+                .pipe(mocha({reporter: 'spec'}))
+                .pipe(istanbul.writeReports({
+                    dir: './coverage/test-coverage',
+                    reporters: ['lcov'],
+                    reportOpts: {
+                        dir: './coverage/test-coverage'
+                    }
+                }))
+                .once('error', function () {
+                    process.exit(1);
+                }).once('end', function () {
+                process.exit();
+            });
+        });
 });
 
 /**
  * Task: Test all components in fast mode (without code coverage report)
  */
-gulp.task('test:all:nocov', function (cb) {
-    return runSequence(
-        'test:server:nocov',
-        'test:api:nocov',
-        cb
-    )
+gulp.task('test:all:nocov', function () {
+    return gulp.src(['./test/server/**/*.js', './test/api_integration/**/*.js'])
+        .pipe(mocha({reporter: 'spec'}))
+        .once('error', function () {
+            process.exit(1);
+        }).once('end', function () {
+            process.exit();
+        });
 });
 
 /**

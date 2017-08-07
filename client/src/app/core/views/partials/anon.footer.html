@@ -1,4 +1,15 @@
-<footer layout="row" layout-align="space-between center">
-    <span><small>FlowR</small></span>
-    <span><small>2016 - 2017</small></span>
-</footer>
+<div class="footer" layout="row" layout-align="space-between center" ng-cloak>
+    <section layout="row" layout-align="center center">FlowR</section>
+    <section layout="row" layout-align="center center">
+        <md-button ui-sref="app.anon.home">Home</md-button>
+        <md-button>About</md-button>
+        <md-button>Services</md-button>
+        <md-button>Contact Us</md-button>
+    </section>
+    <section layout="row" layout-align="center center">
+        <a href="https://github.com/wiatrM/FlowR" target="_blank" class="md-fab md-mini md-primary md-hue-2"
+           aria-label="FlowR repository">
+            <md-icon md-font-icon="mdi mdi-github-circle"></md-icon>
+        </a>
+    </section>
+</div>

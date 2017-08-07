@@ -1,9 +1,10 @@
-<header layout="row" layout-align="space-between center">
-    <div hide-gt-sm>
-        <md-button ng-click="">
-            <md-icon md-font-icon="mdi mdi-menu" aria-label="Menu"></md-icon>
-        </md-button>
-    </div>
-
-    <h3>FlowR</h3>
-</header>
+<md-toolbar class="md-whiteframe-1dp" layout="row" layout-align="space-between center" ng-cloak>
+    <md-button aria-label="FlowR" ui-sref="app.anon.home">
+        <md-icon md-font-icon="mdi mdi-home"></md-icon>
+        FlowR
+    </md-button>
+    <section layout="row" layout-align="center center">
+        <md-button class="md-raised" ui-sref="app.anon.login">Log in</md-button>
+        <md-button class="md-raised md-accent" ui-sref="app.anon.signup">Sign up</md-button>
+    </section>
+</md-toolbar>

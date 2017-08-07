@@ -1,0 +1,17 @@
+<div class="height-100" layout="column" layout-fill>
+    <!-- navbar -->
+    <header ui-view="navbar">
+    </header>
+    <!-- / navbar -->
+    <main class="main-container" layout="row" flex>
+        <!-- sidebar -->
+        <div ui-view="sidebar">
+        </div>
+        <!-- / sidebar -->
+        <!-- content -->
+        <div class="content-container" ui-view="content">
+        </div>
+        <!-- / content -->
+    </main>
+</div>
+

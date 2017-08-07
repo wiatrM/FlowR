@@ -191,7 +191,8 @@ gulp.task('inject', function () {
     return gulp.src(config.srcDestination + '/index.template.html')
 
     // inject bower files
-        .pipe(inject(gulp.src([config.buildDestination + '/js/**/*', config.buildDestination + '/css/**/*'], {
+        .pipe(inject(
+            gulp.src([config.buildDestination + '/js/**/*', config.buildDestination + '/css/**/*'], {
             read: false
         }), {
             name: 'bower',
@@ -213,6 +214,18 @@ gulp.task('inject', function () {
                 name: 'app',
                 ignorePath: 'client/dist'
             }))
+
+        //inject splash screen
+        .pipe(inject(
+            gulp.src(config.buildDestination + '/app/core/views/splash-screen.html'), {
+            starttag: '<!-- inject:splash-screen -->',
+            transform: function (filePath, file) {
+                // return file contents as string
+                return file.contents.toString('utf8')
+            }
+        }))
+
+        // minify html on production
         .pipe(config.production ? minhtml({
             collapseWhitespace: true,
             removeComments: true

@@ -7,30 +7,31 @@ angular.module('flr.core')
 
             // Now set up the states
             $stateProvider
-            // NESTED VIEWS! all states in different modules with app. prefix will include this abstract state with layout.html
+            // NESTED VIEWS! all states in different modules with app.
                 .state('app', {
                     abstract: true,
-                    templateUrl: 'app/core/views/layout.html'
+                    // ui view will provide nested-views function - better than ng-view
+                    template: '<ui-view/>'
                 })
+                // prefix will include this abstract state with layout.html
                 .state('app.anon', {
                     abstract: true,
-                    // ui view will provide nested-views function - better than ng-view
                     data: {
                         // Check with access service
                         access: AccessLevels.anon
                     },
                     views: {
-                        'navbar@app': {
+                        '@': {
+                            templateUrl: 'app/core/views/layout-anon.html',
+                            controller: 'mainController as mVM'
+                        },
+                        'navbar@app.anon': {
                             templateUrl: 'app/core/views/partials/anon.navbar.html',
-                            controller: 'navbarController as nVM'
+                            controller: 'navbarController as navVM'
                         },
-                        'sidebar@app': {
-                            templateUrl: 'app/core/views/partials/anon.sidebar.html',
-                            controller: 'sidebarController'
-                        },
-                        'footer@app': {
+                        'footer@app.anon': {
                             templateUrl: 'app/core/views/partials/anon.footer.html',
-                            controller: 'footerController'
+                            controller: 'footerController as footerVM'
                         }
                     }
                 })
@@ -41,8 +42,9 @@ angular.module('flr.core')
                         pageTitle: AppName
                     },
                     views: {
-                        'content@app': {
-                            templateUrl: 'app/core/views/test.html'
+                        'content@app.anon': {
+                            templateUrl: 'app/core/views/home.html',
+                            controller: 'homeController as homeVm'
                         }
                     }
                 })
@@ -53,10 +55,11 @@ angular.module('flr.core')
                         pageTitle: AppName
                     },
                     views: {
-                        'content@app': {
+                        'content@app.anon': {
                             templateUrl: 'app/core/views/login.html',
                             controller: 'loginController as loginVm'
-                        }
+                        },
+                        'navbar@app.anon': {}
                     }
                 })
                 .state('app.anon.signup', {
@@ -66,22 +69,55 @@ angular.module('flr.core')
                         pageTitle: AppName
                     },
                     views: {
-                        'content@app': {
+                        'content@app.anon': {
                             templateUrl: 'app/core/views/signup.html',
                             controller: 'signupController as signVm'
-                        }
+                        },
+                        'navbar@app.anon': {}
                     }
                 })
                 .state('app.anon.404', {
                     url: '/404',
-                    preload: true,
                     data: {
                         access: AccessLevels.anon,
                         pageTitle: '404'
                     },
                     views: {
-                        'content@app': {
-                            templateUrl: 'app/core/views/404.html'
+                        '@': {
+                            templateUrl: 'app/core/views/404.html',
+                            controller: 'mainController as mVM'
+                        }
+                    }
+                })
+                .state('app.user', {
+                    abstract: true,
+                    data: {
+                        access: AccessLevels.user
+                    },
+                    views: {
+                        '@': {
+                            templateUrl: 'app/core/views/layout-user.html',
+                            controller: 'mainController as mVM'
+                        },
+                        'navbar@app.user': {
+                            templateUrl: 'app/core/views/partials/user.navbar.html',
+                            controller: 'navigationController as navVM'
+                        },
+                        'sidebar@app.user': {
+                            templateUrl: 'app/core/views/partials/user.sidebar.html',
+                            controller: 'sidebarController as sideVM'
+                        }
+                    }
+                })
+                .state('app.user.home', {
+                    url: '/test', //temporary
+                    data: {
+                        access: AccessLevels.user,
+                        pageTitle: AppName
+                    },
+                    views: {
+                        'content@app.user': {
+                            templateUrl: 'app/core/views/test.html'
                         }
                     }
                 });

@@ -1,75 +1,74 @@
-<md-content layout="row" ng-controller="signupController" layout-fill ng-cloak md-theme="default">
-    <section layout="column" flex layout-align="center center" class="signup">
-        <md-card class="md-whiteframe-4dp">
-            <md-toolbar>
-                <div layout="column" layout-padding layout-align="center center">
-                    <h2>Sign Up</h2>
+<md-content class="sign" layout="column" layout-align="start center" layout-fill md-theme="default">
+    <md-button aria-label="back to home" class="md-fab md-primary md-fab-top-left" ui-sref="app.anon.home">
+        <md-tooltip md-direction="right" md-visible="tooltipVisible">Back to home</md-tooltip>
+        <md-icon md-font-icon="mdi mdi-arrow-left"></md-icon>
+    </md-button>
+    <h1 class="flowr">FlowR</h1>
+    <md-card class="md-whiteframe-4dp">
+        <md-toolbar>
+            <div layout="column" layout-padding layout-align="center center">
+                <h2>Sign up</h2>
+            </div>
+        </md-toolbar>
+        <md-card-content>
+            <form name="signVm.signupForm" novalidate>
+                <md-input-container class="md-block">
+                    <label>Username</label>
+                    <input server-error name="username" ng-model="signVm.user.name" type="text" minlength="3" required>
+                    <div ng-messages="signVm.signupForm.username.$error"
+                         ng-show="signVm.signupForm.username.$dirty">
+                        <div ng-message="required">Please enter a username.</div>
+                        <div ng-message="minlength">That's too short.</div>
+                        <div ng-message="server">{{signVm.errorMessage.username}}</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>Email</label>
+                    <input server-error name="email" ng-model="signVm.user.email" type="email" required>
+                    <div ng-messages="signVm.signupForm.email.$error" ng-show="signVm.signupForm.email.$dirty">
+                        <div ng-message="required">Please enter an email.</div>
+                        <div ng-message="email">Please enter your email address correctly.</div>
+                        <div ng-message="server">{{signVm.errorMessage.email}}</div>
+                    </div>
+                </md-input-container>
+                <!--<md-input-container class="md-block">-->
+                <!--<input ng-model="sc.user.confirmEmail" type="email" placeholder="Confirm email" ng-required="true">-->
+                <!--</md-input-container>-->
+                <md-input-container class="md-block">
+                    <label>Password</label>
+                    <input ng-model="signVm.user.password" type="password" required minlength="6" name="password">
+                    <div ng-messages="signVm.signupForm.password.$error"
+                         ng-show="signVm.signupForm.password.$dirty">
+                        <div ng-message="required">Please enter a password.</div>
+                        <div ng-message="minlength">That's too short.</div>
+                    </div>
+                </md-input-container>
+                <!--<md-input-container class="md-block">-->
+                <!--<label>Confirm password</label>-->
+                <!--<input name="confirmPassword" ng-model="signVm.user.confirmPassword" type="password" required-->
+                <!--minlength="6"-->
+                <!--ng-pattern="\b{{password}}\b">-->
+                <!--<div ng-messages="signup.confirmPassword.$error" ng-show="signup.confirmPassword.$dirty">-->
+                <!--<div ng-message="required">Please confirm a password.</div>-->
+                <!--<div ng-message="minlength">That's too short.</div>-->
+                <!--<div ng-message="pattern">It's not equal to you password.</div>-->
+                <!--</div>-->
+                <!--</md-input-container>-->
+                <md-input-container class="md-block">
+                    <md-checkbox name="accept" md-no-ink class="md-primary" ng-disabled="true">
+                        I read and accept <a href="#" class="simple-link">terms and conditions</a>
+                    </md-checkbox>
+                </md-input-container>
+                <div layout="row" layout-align="center center">
+                    <md-button class="md-raised md-primary" ng-disabled="signVm.signupForm.$invalid"
+                               ng-click="signVm.signUp()">Sign Up
+                    </md-button>
                 </div>
-            </md-toolbar>
-            </md-toolbar>
-            <md-card-content>
-                <form name="signVm.signupForm" novalidate>
-                    <md-input-container class="md-block">
-                        <label>Username</label>
-                        <input server-error name="username" ng-model="signVm.user.name" type="text" minlength="3" required>
-                        <div ng-messages="signVm.signupForm.username.$error"
-                             ng-show="signVm.signupForm.username.$dirty">
-                            <div ng-message="required">Please enter a username.</div>
-                            <div ng-message="minlength">That's too short.</div>
-                            <div ng-message="server">{{signVm.errorMessage.username}}</div>
-                        </div>
-                    </md-input-container>
-                    <md-input-container class="md-block">
-                        <label>Email</label>
-                        <input server-error name="email" ng-model="signVm.user.email" type="email" required>
-                        <div ng-messages="signVm.signupForm.email.$error" ng-show="signVm.signupForm.email.$dirty">
-                            <div ng-message="required">Please enter an email.</div>
-                            <div ng-message="email">Please enter your email address correctly.</div>
-                            <div ng-message="server">{{signVm.errorMessage.email}}</div>
-                        </div>
-                    </md-input-container>
-                    <!--<md-input-container class="md-block">-->
-                    <!--<input ng-model="sc.user.confirmEmail" type="email" placeholder="Confirm email" ng-required="true">-->
-                    <!--</md-input-container>-->
-                    <md-input-container class="md-block">
-                        <label>Password</label>
-                        <input ng-model="signVm.user.password" type="password" required minlength="6" name="password">
-                        <div ng-messages="signVm.signupForm.password.$error"
-                             ng-show="signVm.signupForm.password.$dirty">
-                            <div ng-message="required">Please enter a password.</div>
-                            <div ng-message="minlength">That's too short.</div>
-                        </div>
-                    </md-input-container>
-                    <!--<md-input-container class="md-block">-->
-                    <!--<label>Confirm password</label>-->
-                    <!--<input name="confirmPassword" ng-model="signVm.user.confirmPassword" type="password" required-->
-                    <!--minlength="6"-->
-                    <!--ng-pattern="\b{{password}}\b">-->
-                    <!--<div ng-messages="signup.confirmPassword.$error" ng-show="signup.confirmPassword.$dirty">-->
-                    <!--<div ng-message="required">Please confirm a password.</div>-->
-                    <!--<div ng-message="minlength">That's too short.</div>-->
-                    <!--<div ng-message="pattern">It's not equal to you password.</div>-->
-                    <!--</div>-->
-                    <!--</md-input-container>-->
-                    <md-input-container class="md-block">
-                        <md-checkbox name="accept" md-no-ink class="md-primary" ng-disabled="true">
-                            I read and accept <a href="#" class="simple-link">terms and conditions</a>
-                        </md-checkbox>
-                    </md-input-container>
-                    <div layout="row" layout-align="center center">
-                        <md-button class="md-raised md-accent" flex="60" ng-disabled="signVm.signupForm.$invalid"
-                                   ng-click="signVm.signUp()">Sign Up
-                        </md-button>
-                    </div>
-                    <div layout="row" layout-align="space-between start"
-                         class="layout-align-space-between-center layout-row">
-                        <md-input-container>Already have an account?</md-input-container>
-                        <md-input-container>
-                            <a ui-sref="app.anon.login" class="simple-link">Log in</a>
-                        </md-input-container>
-                    </div>
-                </form>
-            </md-card-content>
-        </md-card>
-    </section>
+                <div layout="row" layout-align="space-between start">
+                    <span>Already have an account?</span>
+                    <a ui-sref="app.anon.login" class="simple-link">Log in</a>
+                </div>
+            </form>
+        </md-card-content>
+    </md-card>
 </md-content>

@@ -8,4 +8,4 @@ angular.module('flr.core')
     mode: 2,
     admn: 3,
     suad: 4
-})
+});

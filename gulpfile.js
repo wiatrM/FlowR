@@ -7,6 +7,8 @@ var flatten = require('gulp-flatten');
 var gulpFilter = require('gulp-filter');
 var uglify = require('gulp-uglify');
 var minifycss = require('gulp-minify-css');
+var minhtml = require('gulp-htmlmin');
+var less = require('gulp-less');
 var rename = require('gulp-rename');
 var concat = require('gulp-concat');
 var bower = require('gulp-main-bower-files');
@@ -39,7 +41,7 @@ gulp.task('clean', function () {
         config.tmpDestination + '/**/*',
         '!' + config.tmpDestination + '/README.md',
         config.buildDestination + '/**/*',
-        '!' + config.buildDestination + '/README.md',
+        '!' + config.buildDestination + '/README.md'
     ]);
 });
 
@@ -47,7 +49,7 @@ gulp.task('clean', function () {
  * Task: Grab all main vendor files from bower dep list, concat, rename, minify/uglify on production only,
  * SAVE THEM TO client/dist
  */
-gulp.task('bower', function () {
+gulp.task('bower', ['fonts'], function () {
     var jsFilter = gulpFilter('**/*.js', {
         restore: true
     });
@@ -55,12 +57,6 @@ gulp.task('bower', function () {
         restore: true
     });
     var lessFilter = gulpFilter('**/*.less', {
-        restore: true
-    });
-    var robotoFontsFilter = gulpFilter('**/roboto-fontface/**/*.{eot,svg,ttf,woff,woff2}', {
-        restore: true
-    });
-    var fontsFilter = gulpFilter(['**/*.{eot,svg,ttf,woff,woff2}', '!**/roboto-fontface/**/*.{eot,svg,ttf,woff,woff2}'], {
         restore: true
     });
 
@@ -102,19 +98,49 @@ gulp.task('bower', function () {
         .pipe(lessFilter)
         .pipe(concat('vendor.less'))
         .pipe(gulp.dest(config.buildDestination + '/less'))
-        .pipe(lessFilter.restore)
+        .pipe(lessFilter.restore);
+
+});
+
+/**
+ * Task: Grab specific fonts files from bower dep list
+ * SAVE THEM TO client/dist
+ */
+gulp.task('fonts', function () {
+    var robotoFontsFilter = gulpFilter('**/roboto-fontface/**/*.{eot,svg,ttf,woff,woff2}', {
+        restore: true
+    });
+    var mdiFontsFilter = gulpFilter('**/mdi/**/*.{eot,svg,ttf,woff,woff2}', {
+        restore: true
+    });
+
+    // get all main bower files list
+    return gulp.src('./bower.json')
+        .pipe(bower())
+        .pipe(debug())
 
         // roboto fonts
         .pipe(robotoFontsFilter)
         .pipe(flatten({includeParents: -1}))
         .pipe(gulp.dest(config.buildDestination + '/fonts'))
         .pipe(robotoFontsFilter.restore)
-        // others fonts
-        .pipe(fontsFilter)
-        .pipe(flatten())
-        .pipe(gulp.dest(config.buildDestination + '/fonts'))// bug: still include /roboto-fontface/
-        .pipe(fontsFilter.restore);
 
+        // mdi fonts
+        .pipe(mdiFontsFilter)
+        .pipe(flatten())
+        .pipe(gulp.dest(config.buildDestination + '/fonts'))
+        .pipe(mdiFontsFilter.restore);
+
+});
+
+
+/**
+ * Task: Copy favicon.
+ * SAVE THEM TO client/dist
+ */
+gulp.task('favicon', function () {
+    return gulp.src(config.srcDestination + '/favicon.ico')
+        .pipe(gulp.dest(config.buildDestination));
 });
 
 /**
@@ -130,6 +156,10 @@ gulp.task('app', function () {
     });
     return gulp.src(config.srcDestination + '/app/**/*')
         .pipe(htmlFilter)
+        .pipe(config.production ? minhtml({
+            collapseWhitespace: true,
+            removeComments: true
+        }) : util.noop())
         .pipe(gulp.dest(config.buildDestination + '/app', {
             global: '.'
         }))
@@ -161,7 +191,8 @@ gulp.task('inject', function () {
     return gulp.src(config.srcDestination + '/index.template.html')
 
     // inject bower files
-        .pipe(inject(gulp.src([config.buildDestination + '/js/**/*', config.buildDestination + '/css/**/*', config.buildDestination + '/fonts/**/*'], {
+        .pipe(inject(
+            gulp.src([config.buildDestination + '/js/**/*', config.buildDestination + '/css/**/*'], {
             read: false
         }), {
             name: 'bower',
@@ -183,15 +214,33 @@ gulp.task('inject', function () {
                 name: 'app',
                 ignorePath: 'client/dist'
             }))
+
+        //inject splash screen
+        .pipe(inject(
+            gulp.src(config.buildDestination + '/app/core/views/splash-screen.html'), {
+            starttag: '<!-- inject:splash-screen -->',
+            transform: function (filePath, file) {
+                // return file contents as string
+                return file.contents.toString('utf8')
+            }
+        }))
+
+        // minify html on production
+        .pipe(config.production ? minhtml({
+            collapseWhitespace: true,
+            removeComments: true
+        }) : util.noop())
         .pipe(rename('index.html'))
         .pipe(gulp.dest(config.buildDestination));
 });
 
 /**
- * Task: Copy CSS files.
+ * Task: Grab all app .less files from project, minify on production only,
+ * SAVE THEM TO client/dist
  */
-gulp.task('css', function () {
-    return gulp.src(config.srcDestination + '/css/**/*.css')
+gulp.task('less', function () {
+    return gulp.src(config.srcDestination + '/less/**/*.less')
+        .pipe(less())
         .pipe(concat('app.css'))
         .pipe(config.production ? minifycss() : util.noop())
         //.pipe(config.production ? gzip() : util.noop()) // for now disabled
@@ -202,7 +251,6 @@ gulp.task('css', function () {
         .pipe(gulp.dest(config.buildDestination + '/style'));
 });
 
-
 /**
  * Task: Main build task. NOTE: must be run at least ONCE after installation
  */
@@ -211,7 +259,7 @@ gulp.task('build', function (cb) {
     runSequence(
         'clean',
         // those can be done async in paraell for speed-up
-        ['bower', 'app', 'css'],
+        ['bower', 'app', 'less', 'favicon'],
         // wait for finish than...
         'inject',
         cb
@@ -237,7 +285,7 @@ gulp.task('rebuild:bower', function (cb) {
 gulp.task('rebuild:app', function (cb) {
     // run tasks synchronously
     runSequence(
-        ['app', 'css'],
+        ['app', 'less'],
         cb
     )
 });
@@ -264,7 +312,12 @@ gulp.task('test:api', function () {
                     reportOpts: {
                         dir: './coverage/api-test-coverage'
                     }
-                }));
+                }))
+                .once('error', function () {
+                    process.exit(1);
+                }).once('end', function () {
+                process.exit();
+            });
         });
 });
 

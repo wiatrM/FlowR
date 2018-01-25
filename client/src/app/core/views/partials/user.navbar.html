@@ -1,0 +1,50 @@
+<md-toolbar class="user-nav md-whiteframe-1dp" layout="row" layout-align="space-between center" ng-cloak>
+    <div layout="row" layout-align="start center" flex="" class="layout-align-start-center layout-row flex">
+        <div class="logo-container" layout="row" layout-align="start center">
+            <span class="logo" md-colors="::{backgroundColor: 'accent-500'}">FlowR</span>
+        </div>
+        <md-button class="md-icon-button" ng-click="navVM.openSideMenu()">
+            <!--TODO currently hiding not working-->
+            <md-icon md-font-icon="mdi mdi-backburger"></md-icon>
+        </md-button>
+    </div>
+    <section layout="row" layout-align="center center">
+        <md-menu md-position-mode="left bottom">
+            <md-button class="md-icon-button" ng-click="navVM.openMenu($mdMenu, $event)">
+                <md-icon md-font-icon="mdi mdi-bell-outline"></md-icon>
+            </md-button>
+            <md-menu-content width="3">
+                <md-menu-item>
+                    <md-button>Notifications</md-button>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
+        <md-menu md-position-mode="left bottom">
+            <md-button ng-click="navVM.openMenu($mdMenu, $event)">
+                <md-icon md-font-icon="mdi mdi-face"></md-icon>
+                John Doe
+            </md-button>
+            <md-menu-content width="4">
+                <md-menu-item>
+                    <md-button>
+                        <md-icon md-font-icon="mdi mdi-account"></md-icon>
+                        My Profile
+                    </md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button>
+                        <md-icon md-font-icon="mdi mdi-settings"></md-icon>
+                        Settings
+                    </md-button>
+                </md-menu-item>
+                <md-menu-divider></md-menu-divider>
+                <md-menu-item>
+                    <md-button>
+                        <md-icon md-font-icon="mdi mdi-logout"></md-icon>
+                        Logout
+                    </md-button>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
+    </section>
+</md-toolbar>

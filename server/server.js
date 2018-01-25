@@ -1,49 +1,45 @@
+'use strict';
+
 var loopback = require('loopback');
 var boot = require('loopback-boot');
 var http = require('http');
 
 var app = module.exports = loopback();
 
+app.start = function (done) {
+    // start the web server
+    return app.listen(function () {
+        app.emit('started');
+        var baseUrl = app.get('url').replace(/\/$/, '');
+        console.log('Web server listening at: %s', baseUrl);
+        if (app.get('loopback-component-explorer')) {
+            var explorerPath = app.get('loopback-component-explorer').mountPath;
+            console.log('Browse your REST API at %s%s', baseUrl, explorerPath);
+        }
+        done();
+    });
+};
+
+app.close = function (cb) {
+    app.removeAllListeners('started');
+    app.removeAllListeners('loaded');
+    console.log('Server closed');
+    cb();
+};
+
+
+// Bootstrap the application, configure models, datasources and middleware.
+// Sub-apps like REST API are mounted via boot scripts.
 boot(app, __dirname, function (err) {
     if (err) throw err;
 
-    var isMain = require.main === module;
-    app.start = function (done) {
-        var port = app.get('port');
-        var host = app.get('host');
-        var httpServer = http.createServer(app).listen(port, host, function () {
-            if (isMain)
-                printServerListeningMsg('http', host, port);
-            app.emit('started');
-
-            if (app.get('loopback-component-explorer')) {
-                var baseUrl = host.replace(/\/$/, '');
-                var explorerPath = app.get('loopback-component-explorer').mountPath;
-                console.log('Browse your REST API at http://%s%s', baseUrl, explorerPath);
-            }
-
-            app.close = function (cb) {
-                app.removeAllListeners('started');
-                app.removeAllListeners('loaded');
-                httpServer.close(function () {
-                    console.log('Server closed');
-                    cb();
-                });
-            };
-            done();
-        });
-    };
-
-    if (isMain)
+    // start the server if `$ node server.js`
+    if (require.main === module) {
         app.start(function () {
             console.log('Server started!')
         });
+    }
 
     app.loaded = true;
     app.emit('loaded');
 });
-
-function printServerListeningMsg(protocol, host, port) {
-    var url = protocol + '://' + host + ':' + port;
-    console.log('Web server listening at', url);
-}

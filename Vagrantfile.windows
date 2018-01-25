@@ -21,13 +21,13 @@ Vagrant.configure("2") do |config|
   end
 
   # Add port-forward for Express app
-  config.vm.network :forwarded_port, guest: 3000, host: 3000
+  config.vm.network :forwarded_port, guest: 3000, host: 3000, host_ip: "127.0.0.1"
   # Add port-forward for Livereload
-  config.vm.network :forwarded_port, guest: 35729, host: 35729
+  config.vm.network :forwarded_port, guest: 35729, host: 35729, host_ip: "127.0.0.1"
   # Add port-forward for PostgreSQL
-  config.vm.network :forwarded_port, guest: 5432, host: 5432
+  config.vm.network :forwarded_port, guest: 5432, host: 5433, host_ip: "127.0.0.1"
   # Add port-forward for NGINX
-  config.vm.network :forwarded_port, guest: 80, host: 80, auto_correct: true
+  config.vm.network :forwarded_port, guest: 80, host: 80, host_ip: "127.0.0.1", auto_correct: true
 
   config.ssh.forward_agent = true
 

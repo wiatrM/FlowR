@@ -1,1 +1,75 @@
-<div>Hello Angular!</div>
+<md-content layout-padding ng-cloak>
+
+    <div layout="column" layout-wrap>
+    <div layout="row" layout-xs="column">
+        <div layout="column" flex="40" flex-xs="100">
+            <md-card flex>
+                <md-card-title>
+                    <span class="md-display-1 font-weight-300">Welcome back, John Doe!</span>
+                </md-card-title>
+                <md-card-content>
+                    Your last login was 0 days ago.
+                </md-card-content>
+            </md-card>
+        </div>
+        <div layout="column" flex="60" flex-xs="100">
+            <div layout="row" flex>
+                <md-card flex>
+                    <md-card-content>
+                        You have 0 task.
+                    </md-card-content>
+                </md-card>
+                <md-card flex>
+                    <md-card-content>
+                        You have 0 notifications.
+                    </md-card-content>
+                </md-card>
+                <md-card flex>
+                    <md-card-content>
+                        You have new 0 messages.
+                    </md-card-content>
+                </md-card>
+            </div>
+            <div layout="row" flex>
+                <md-card flex>
+                    <md-card-content>
+                        You have completed 17 tasks.
+                    </md-card-content>
+                </md-card>
+                <md-card flex>
+                    <md-card-content>
+                        Fun fact:<br>
+                        Cherophobia is the fear of fun.
+                    </md-card-content>
+                </md-card>
+                <md-card flex>
+                    <md-card-content>
+                        Have nice day :)
+                    </md-card-content>
+                </md-card>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div layout="row">
+
+        <md-fab-speed-dial md-open="isOpen" md-direction="left" class="md-fling md-fab-bottom-right"
+                           ng-mouseenter="isOpen=true" ng-mouseleave="isOpen=false">
+            <md-fab-trigger>
+                <md-button aria-label="menu" class="md-fab md-warn">
+                    <md-icon md-font-icon="mdi mdi-menu"></md-icon>
+                </md-button>
+            </md-fab-trigger>
+            <md-fab-actions>
+                <md-button aria-label="Twitter" class="md-fab md-raised md-mini">
+                    <md-icon md-font-icon="mdi mdi-twitter" aria-label="Twitter"></md-icon>
+                </md-button>
+                <md-button aria-label="Facebook" class="md-fab md-raised md-mini">
+                    <md-icon md-font-icon="mdi mdi-facebook" aria-label="Facebook"></md-icon>
+                </md-button>
+            </md-fab-actions>
+        </md-fab-speed-dial>
+    </div>
+
+</md-content>
